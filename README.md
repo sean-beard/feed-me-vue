@@ -1,4 +1,4 @@
-# feed_me_frontend
+# FeedMe
 
 ## Project setup
 
