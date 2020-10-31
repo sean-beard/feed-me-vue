@@ -1,6 +1,20 @@
 # FeedMe
 
-## Project setup
+Frontend layer of the RSS feed management application.
+
+## Features
+
+- Get a chronological, personalized newsfeed that you create
+- Users can mark feed items as read/unread
+- Grouping
+  - All
+  - By feed
+- Filtering logic similar to native iOS mail application (available per group)
+  - All vs unread
+  - Flagged (not MVP)
+- Users can flag items to save for later (not MVP)
+
+## Development
 
 ```
 yarn install
