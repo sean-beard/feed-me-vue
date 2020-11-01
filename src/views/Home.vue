@@ -17,7 +17,7 @@
 
     <p v-if="loading">Loading...</p>
 
-    <div class="layout">
+    <div class="layout" v-if="this.isAuthenticated">
       <section>
         <div v-for="item in feedItems" :key="item.guid">
           <FeedItemCard
