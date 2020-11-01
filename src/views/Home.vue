@@ -1,11 +1,19 @@
 <template>
-  <div class="home">
-    <button v-if="this.isAuthenticated" @click="logout">
-      Logout
-    </button>
-    <a v-if="!this.isAuthenticated" href="http://localhost:4001/auth/github">
-      Login to Github
-    </a>
+  <div>
+    <nav>
+      <h1>FeedMe</h1>
+      <div>
+        <button v-if="this.isAuthenticated" @click="logout">
+          Logout
+        </button>
+        <a
+          v-if="!this.isAuthenticated"
+          href="http://localhost:4001/auth/github"
+        >
+          Login to Github
+        </a>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -45,3 +53,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+</style>
