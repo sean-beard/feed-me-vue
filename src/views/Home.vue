@@ -37,6 +37,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { flatten } from "ramda";
 import FeedItemCard from "@/components/FeedItemCard";
 
 export default {
@@ -74,8 +75,7 @@ export default {
         .then(r => r.json())
         .then(feeds => {
           const feedItems = feeds.map(({ items }) => items);
-          // TODO: flatten this
-          this.feedItems = feedItems[0];
+          this.feedItems = flatten(feedItems);
           this.loading = false;
         });
     },
