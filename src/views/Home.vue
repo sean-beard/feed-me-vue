@@ -15,6 +15,8 @@
       </div>
     </nav>
 
+    <p v-if="loading">Loading...</p>
+
     <div class="layout">
       <section>
         <div v-for="item in feedItems" :key="item.guid">
@@ -44,6 +46,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       feedItems: [],
       selectedDesc: ""
     };
@@ -60,6 +63,8 @@ export default {
         });
     },
     getFeeds() {
+      this.loading = true;
+
       fetch("http://localhost:4001/feed", {
         method: "GET",
         headers: {
@@ -71,6 +76,7 @@ export default {
           const feedItems = feeds.map(({ items }) => items);
           // TODO: flatten this
           this.feedItems = feedItems[0];
+          this.loading = false;
         });
     },
     handleFeedItemClick(guid) {
