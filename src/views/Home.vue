@@ -17,20 +17,12 @@
 
     <p v-if="loading">Loading...</p>
 
-    <div class="layout" v-if="this.isAuthenticated">
+    <div v-if="this.isAuthenticated">
       <section>
-        <div v-for="item in feedItems" :key="item.guid">
-          <FeedItemCard
-            :item="item"
-            v-on:feed-item-clicked="handleFeedItemClick"
-          />
+        <div v-for="item in feedItems" :key="item.id">
+          <FeedItemCard :item="item" />
         </div>
       </section>
-      <section
-        class="item-desc"
-        v-if="!!selectedDesc"
-        v-html="selectedDesc"
-      ></section>
     </div>
   </div>
 </template>
@@ -48,8 +40,7 @@ export default {
   data() {
     return {
       loading: false,
-      feedItems: [],
-      selectedDesc: ""
+      feedItems: []
     };
   },
   methods: {
@@ -78,13 +69,6 @@ export default {
           this.feedItems = flatten(feedItems);
           this.loading = false;
         });
-    },
-    handleFeedItemClick(guid) {
-      const item = this.feedItems.find(item => item.guid === guid);
-
-      if (item) {
-        this.selectedDesc = item.description;
-      }
     }
   },
   computed: {
@@ -104,13 +88,5 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-}
-
-.layout {
-  display: flex;
-}
-
-.item-desc {
-  flex: 2;
 }
 </style>
