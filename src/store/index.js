@@ -24,6 +24,9 @@ export default new Vuex.Store({
       commit("updateAuthStatus", payload);
     },
   },
+  getters: {
+    authToken: ({ authToken }) => authToken,
+  },
   modules: {},
   plugins: [vuexLocal.plugin],
 });

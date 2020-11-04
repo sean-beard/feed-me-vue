@@ -4,6 +4,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { get } from "@/utils/api";
 
 export default {
   name: "FeedItem",
@@ -21,16 +22,9 @@ export default {
       return;
     }
 
-    fetch(`http://localhost:4001/item/${this.$route.params.id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${this.authToken}`
-      }
-    })
-      .then(response => response.json())
-      .then(feedItem => {
-        this.item = feedItem;
-      });
+    get(`/item/${this.$route.params.id}`).then(feedItem => {
+      this.item = feedItem;
+    });
   }
 };
 </script>

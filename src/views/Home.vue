@@ -31,6 +31,7 @@
 import { mapActions, mapState } from "vuex";
 import { flatten } from "ramda";
 import FeedItemCard from "@/components/FeedItemCard";
+import { get } from "@/utils/api";
 
 export default {
   name: "Home",
@@ -46,29 +47,20 @@ export default {
   methods: {
     ...mapActions(["setIsAuthenticated"]),
     logout() {
-      fetch("http://localhost:4001/auth/logout")
-        .then(resp => resp.json())
-        .then(({ status }) => {
-          if (status === 200) {
-            this.setIsAuthenticated({ isAuthenticated: false, token: "" });
-          }
-        });
+      get("/auth/logout", { useAuth: false }).then(({ status }) => {
+        if (status === 200) {
+          this.setIsAuthenticated({ isAuthenticated: false, token: "" });
+        }
+      });
     },
     getFeeds() {
       this.loading = true;
 
-      fetch("http://localhost:4001/feed", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.authToken}`
-        }
-      })
-        .then(r => r.json())
-        .then(feeds => {
-          const feedItems = feeds.map(({ items }) => items);
-          this.feedItems = flatten(feedItems);
-          this.loading = false;
-        });
+      get("/feed").then(feeds => {
+        const feedItems = feeds.map(({ items }) => items);
+        this.feedItems = flatten(feedItems);
+        this.loading = false;
+      });
     }
   },
   computed: {
