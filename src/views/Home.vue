@@ -6,10 +6,7 @@
         <button v-if="this.isAuthenticated" @click="logout">
           Logout
         </button>
-        <a
-          v-if="!this.isAuthenticated"
-          href="http://localhost:4001/auth/github"
-        >
+        <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
           Login to Github
         </a>
       </div>
@@ -41,6 +38,7 @@ export default {
   data() {
     return {
       loading: false,
+      apiBaseUrl: process.env.VUE_APP_BASE_API_URL,
       feedItems: []
     };
   },
