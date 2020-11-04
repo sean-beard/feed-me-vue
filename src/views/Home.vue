@@ -6,10 +6,7 @@
         <button v-if="this.isAuthenticated" @click="logout">
           Logout
         </button>
-        <a
-          v-if="!this.isAuthenticated"
-          href="http://localhost:4001/auth/github"
-        >
+        <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
           Login to Github
         </a>
       </div>
@@ -17,20 +14,12 @@
 
     <p v-if="loading">Loading...</p>
 
-    <div class="layout" v-if="this.isAuthenticated">
+    <div v-if="this.isAuthenticated">
       <section>
-        <div v-for="item in feedItems" :key="item.guid">
-          <FeedItemCard
-            :item="item"
-            v-on:feed-item-clicked="handleFeedItemClick"
-          />
+        <div v-for="item in feedItems" :key="item.id">
+          <FeedItemCard :item="item" />
         </div>
       </section>
-      <section
-        class="item-desc"
-        v-if="!!selectedDesc"
-        v-html="selectedDesc"
-      ></section>
     </div>
   </div>
 </template>
@@ -39,6 +28,7 @@
 import { mapActions, mapState } from "vuex";
 import { flatten } from "ramda";
 import FeedItemCard from "@/components/FeedItemCard";
+import { get } from "@/utils/api";
 
 export default {
   name: "Home",
@@ -48,43 +38,27 @@ export default {
   data() {
     return {
       loading: false,
-      feedItems: [],
-      selectedDesc: ""
+      apiBaseUrl: process.env.VUE_APP_BASE_API_URL,
+      feedItems: []
     };
   },
   methods: {
     ...mapActions(["setIsAuthenticated"]),
     logout() {
-      fetch("http://localhost:4001/auth/logout")
-        .then(resp => resp.json())
-        .then(({ status }) => {
-          if (status === 200) {
-            this.setIsAuthenticated({ isAuthenticated: false, token: "" });
-          }
-        });
+      get("/auth/logout", { useAuth: false }).then(({ status }) => {
+        if (status === 200) {
+          this.setIsAuthenticated({ isAuthenticated: false, token: "" });
+        }
+      });
     },
     getFeeds() {
       this.loading = true;
 
-      fetch("http://localhost:4001/feed", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${this.authToken}`
-        }
-      })
-        .then(r => r.json())
-        .then(feeds => {
-          const feedItems = feeds.map(({ items }) => items);
-          this.feedItems = flatten(feedItems);
-          this.loading = false;
-        });
-    },
-    handleFeedItemClick(guid) {
-      const item = this.feedItems.find(item => item.guid === guid);
-
-      if (item) {
-        this.selectedDesc = item.description;
-      }
+      get("/feed").then(feeds => {
+        const feedItems = feeds.map(({ items }) => items);
+        this.feedItems = flatten(feedItems);
+        this.loading = false;
+      });
     }
   },
   computed: {
@@ -104,13 +78,5 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-}
-
-.layout {
-  display: flex;
-}
-
-.item-desc {
-  flex: 2;
 }
 </style>

@@ -4,6 +4,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { get } from "@/utils/api";
 
 export default {
   methods: {
@@ -13,14 +14,14 @@ export default {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
 
-    fetch(`http://localhost:4001/auth/github/callback?code=${code}`)
-      .then(res => res.json())
-      .then(({ status, token }) => {
+    get(`/auth/github/callback?code=${code}`, { useAuth: false }).then(
+      ({ status, token }) => {
         if (status === 200) {
           this.setIsAuthenticated({ isAuthenticated: true, authToken: token });
           this.$router.push("/");
         }
-      });
+      }
+    );
   }
 };
 </script>

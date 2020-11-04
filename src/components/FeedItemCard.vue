@@ -1,8 +1,9 @@
 <template>
   <div class="card">
-    <button class="card-btn" @click="handleClick">
+    <!-- TODO: can we refer to component here instead? -->
+    <a class="card-link" :href="`/#/item/${this.item.id}`">
       <p>{{ item.title }}</p>
-    </button>
+    </a>
   </div>
 </template>
 
@@ -11,11 +12,6 @@ export default {
   name: "FeedItemCard",
   props: {
     item: Object
-  },
-  methods: {
-    handleClick() {
-      this.$emit("feed-item-clicked", this.item.guid);
-    }
   }
 };
 </script>
@@ -25,7 +21,7 @@ export default {
   border: 1px solid black;
 }
 
-.card-btn {
+.card-link {
   width: 100%;
   cursor: pointer;
 }
