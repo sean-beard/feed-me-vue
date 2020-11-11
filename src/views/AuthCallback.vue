@@ -18,7 +18,7 @@ export default {
       ({ status, token }) => {
         if (status === 200) {
           this.setIsAuthenticated({ isAuthenticated: true, authToken: token });
-          this.$router.push("/");
+          this.$router.push({ name: "Home" });
         }
       }
     );

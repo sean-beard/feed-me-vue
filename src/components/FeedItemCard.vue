@@ -1,9 +1,11 @@
 <template>
   <div class="card">
-    <!-- TODO: can we refer to component here instead? -->
-    <a class="card-link" :href="`/#/item/${this.item.id}`">
+    <router-link
+      class="card-link"
+      :to="{ name: 'FeedItem', params: { id: this.item.id } }"
+    >
       <p>{{ item.title }}</p>
-    </a>
+    </router-link>
   </div>
 </template>
 
