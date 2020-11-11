@@ -1,6 +1,8 @@
 <template>
   <nav>
-    <h1>FeedMe</h1>
+    <h1>
+      <router-link :to="{ name: 'Home' }">FeedMe</router-link>
+    </h1>
     <div>
       <button v-if="this.isAuthenticated" @click="logout">
         Logout
