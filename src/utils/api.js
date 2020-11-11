@@ -5,9 +5,9 @@ export const get = async (path, opts = { useAuth: true }) => {
     method: "GET",
     headers: opts.useAuth
       ? {
-          Authorization: `Bearer ${store.getters.authToken}`,
+          Authorization: `Bearer ${store.getters.authToken}`
         }
-      : {},
+      : {}
   });
 
   return response.json();

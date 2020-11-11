@@ -10,23 +10,23 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: Home
   },
   {
     path: "/auth/github/callback",
     name: "AuthCallback",
-    component: AuthCallback,
+    component: AuthCallback
   },
   {
     path: "/item/:id",
     name: "FeedItem",
-    component: FeedItem,
-  },
+    component: FeedItem
+  }
 ];
 
 const router = new VueRouter({
   routes,
-  mode: "history",
+  mode: "history"
 });
 
 export default router;
