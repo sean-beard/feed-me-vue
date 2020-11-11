@@ -12,3 +12,16 @@ export const get = async (path, opts = { useAuth: true }) => {
 
   return response.json();
 };
+
+export const post = async (path, body) => {
+  const response = await fetch(`${process.env.VUE_APP_BASE_API_URL}${path}`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${store.getters.authToken}`
+    }
+  });
+
+  return response.json();
+};

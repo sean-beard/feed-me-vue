@@ -4,6 +4,7 @@
       <router-link :to="{ name: 'Home' }">FeedMe</router-link>
     </h1>
     <div>
+      <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
       <button v-if="this.isAuthenticated" @click="logout">
         Logout
       </button>
