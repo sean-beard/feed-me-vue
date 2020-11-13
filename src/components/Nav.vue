@@ -3,15 +3,16 @@
     <h1>
       <router-link :to="{ name: 'Home' }">FeedMe</router-link>
     </h1>
-    <div>
+    <div v-if="this.isAuthenticated">
       <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
-      <button v-if="this.isAuthenticated" @click="logout">
+      <button @click="logout">
         Logout
       </button>
-      <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
-        Login to Github
-      </a>
     </div>
+
+    <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
+      Login to Github
+    </a>
   </nav>
 </template>
 
