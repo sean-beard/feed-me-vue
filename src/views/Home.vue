@@ -1,6 +1,7 @@
 <template>
   <div>
     <p v-if="loading">Loading...</p>
+    <p v-else-if="error">{{ error }}</p>
 
     <div v-if="this.isAuthenticated">
       <section>
@@ -26,6 +27,7 @@ export default {
   data() {
     return {
       loading: false,
+      error: "",
       feedItems: []
     };
   },
@@ -33,11 +35,17 @@ export default {
     getFeeds() {
       this.loading = true;
 
-      get("/feed").then(feeds => {
-        const feedItems = feeds.map(({ items }) => items);
-        this.feedItems = flatten(feedItems);
-        this.loading = false;
-      });
+      get("/feed")
+        .then(feeds => {
+          const feedItems = feeds.map(({ items }) => items);
+          this.feedItems = flatten(feedItems);
+        })
+        .catch(() => {
+          this.error = "There was an error loading your feeds";
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   },
   computed: {
