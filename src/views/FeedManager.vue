@@ -9,9 +9,13 @@
       </p>
 
       <form @submit="subscribe">
-        <label for="url">Enter the RSS feed URL:</label>
-        <input id="url" name="url" v-model="url" />
-        <button type="submit">Subscribe</button>
+        <div class="input-field">
+          <input id="url" class="validate" type="text" v-model="url" />
+          <label for="url">Enter the RSS feed URL</label>
+        </div>
+        <button class="btn" type="submit">
+          Subscribe
+        </button>
       </form>
     </section>
   </div>
@@ -51,3 +55,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+h2 {
+  font-size: 2rem;
+}
+
+.input-field {
+  margin: 1rem auto;
+  max-width: 400px;
+  width: 80%;
+}
+</style>
