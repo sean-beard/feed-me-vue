@@ -1,12 +1,11 @@
 <template>
-  <div class="card">
-    <router-link
-      class="card-link"
-      :to="{ name: 'FeedItem', params: { id: this.item.id } }"
-    >
-      <p>{{ item.title }}</p>
-    </router-link>
-  </div>
+  <router-link
+    class="card-panel indigo-text text-darken-4"
+    :class="{ unread: !item.isRead }"
+    :to="{ name: 'FeedItem', params: { id: this.item.id } }"
+  >
+    {{ item.title }}
+  </router-link>
 </template>
 
 <script>
@@ -19,12 +18,20 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  border: 1px solid black;
+.card-panel {
+  display: block;
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 80%;
+  max-width: 750px;
 }
 
-.card-link {
-  width: 100%;
-  cursor: pointer;
+.card-panel:hover {
+  background-color: #bbbbbb;
+}
+
+.card-panel.unread {
+  border-left: 4px solid #1a237e;
+  font-weight: bold;
 }
 </style>
