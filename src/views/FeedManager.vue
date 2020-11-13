@@ -10,7 +10,7 @@
 
       <form @submit="subscribe">
         <div class="input-field">
-          <input id="url" class="validate" type="text" v-model="url" />
+          <input id="url" class="validate" type="text" v-model="url" required />
           <label for="url">Enter the RSS feed URL</label>
         </div>
         <button class="btn" type="submit">
