@@ -42,6 +42,7 @@ export default {
       get("/auth/logout", { useAuth: false }).then(({ status }) => {
         if (status === 200) {
           this.setIsAuthenticated({ isAuthenticated: false, token: "" });
+          this.$router.push({ name: "Home" });
         }
       });
     }
