@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 v-if="loading">Loading...</h2>
-    <p v-else-if="error">{{ error }}</p>
+    <h2 v-else-if="error">{{ error }}</h2>
 
     <div v-if="this.isAuthenticated">
       <section>
