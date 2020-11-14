@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p v-if="loading">Loading...</p>
+    <h2 v-if="loading">Loading...</h2>
+    <p v-else-if="error">{{ error }}</p>
 
     <div v-if="this.isAuthenticated">
       <section>
@@ -9,6 +10,8 @@
         </div>
       </section>
     </div>
+
+    <!-- TODO: implement pre-login homepage -->
   </div>
 </template>
 
@@ -26,6 +29,7 @@ export default {
   data() {
     return {
       loading: false,
+      error: "",
       feedItems: []
     };
   },
@@ -33,11 +37,25 @@ export default {
     getFeeds() {
       this.loading = true;
 
-      get("/feed").then(feeds => {
-        const feedItems = feeds.map(({ items }) => items);
-        this.feedItems = flatten(feedItems);
-        this.loading = false;
-      });
+      get("/feed")
+        .then(feeds => {
+          const feedItems = feeds.map(({ name, items }) =>
+            items.map(item => {
+              item.feedName = name;
+              item.pubDate = new Date(item.pubDate);
+              return item;
+            })
+          );
+          this.feedItems = flatten(feedItems).sort(
+            (a, b) => b.pubDate - a.pubDate
+          );
+        })
+        .catch(() => {
+          this.error = "There was an error loading your feeds";
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   },
   computed: {

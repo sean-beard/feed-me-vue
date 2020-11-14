@@ -6,6 +6,9 @@
 </template>
 
 <script>
+import "materialize-css/dist/css/materialize.min.css";
+import "materialize-css/dist/js/materialize.min";
+
 import Nav from "./components/Nav";
 
 export default {
@@ -15,6 +18,10 @@ export default {
 </script>
 
 <style>
+h2 {
+  font-size: 2rem;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -34,5 +41,15 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.btn {
+  background-color: #1a237e;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: white;
+  color: #1a237e;
 }
 </style>

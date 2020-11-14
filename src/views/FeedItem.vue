@@ -1,10 +1,15 @@
 <template>
-  <div v-if="!!item.description" v-html="item.description"></div>
+  <div>
+    <button class="btn" @click="toggleReadStatus()">
+      {{ item.isRead ? "Mark as unread" : "Mark as read" }}
+    </button>
+    <div v-if="!!item.description" v-html="item.description"></div>
+  </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { get } from "@/utils/api";
+import { get, post } from "@/utils/api";
 
 export default {
   name: "FeedItem",
@@ -15,6 +20,15 @@ export default {
   },
   computed: {
     ...mapState(["isAuthenticated", "authToken"])
+  },
+  methods: {
+    toggleReadStatus() {
+      post("/item", { id: this.item.id, isRead: !this.item.isRead }).then(
+        ({ isRead }) => {
+          this.item.isRead = isRead;
+        }
+      );
+    }
   },
   created() {
     if (!this.isAuthenticated) {
@@ -28,3 +42,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn {
+  margin: 2rem 0;
+}
+</style>
