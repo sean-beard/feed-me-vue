@@ -40,10 +40,13 @@ export default {
           const feedItems = feeds.map(({ name, items }) =>
             items.map(item => {
               item.feedName = name;
+              item.pubDate = new Date(item.pubDate);
               return item;
             })
           );
-          this.feedItems = flatten(feedItems);
+          this.feedItems = flatten(feedItems).sort(
+            (a, b) => b.pubDate - a.pubDate
+          );
         })
         .catch(() => {
           this.error = "There was an error loading your feeds";
