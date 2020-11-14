@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="toggleReadStatus()">
+    <button class="btn" @click="toggleReadStatus()">
       {{ item.isRead ? "Mark as unread" : "Mark as read" }}
     </button>
     <div v-if="!!item.description" v-html="item.description"></div>
@@ -42,3 +42,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn {
+  margin: 2rem 0;
+}
+</style>
