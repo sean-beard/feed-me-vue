@@ -4,7 +4,8 @@
     :class="{ unread: !item.isRead }"
     :to="{ name: 'FeedItem', params: { id: this.item.id } }"
   >
-    {{ item.title }}
+    <p>{{ item.title }}</p>
+    <p>{{ item.feedName }}</p>
   </router-link>
 </template>
 
@@ -18,6 +19,14 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin: 0;
+}
+
+p + p {
+  font-weight: normal;
+}
+
 .card-panel {
   display: block;
   margin: 1rem auto;

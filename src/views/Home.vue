@@ -37,7 +37,12 @@ export default {
 
       get("/feed")
         .then(feeds => {
-          const feedItems = feeds.map(({ items }) => items);
+          const feedItems = feeds.map(({ name, items }) =>
+            items.map(item => {
+              item.feedName = name;
+              return item;
+            })
+          );
           this.feedItems = flatten(feedItems);
         })
         .catch(() => {
