@@ -18,6 +18,10 @@ export default {
 </script>
 
 <style>
+h2 {
+  font-size: 2rem;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

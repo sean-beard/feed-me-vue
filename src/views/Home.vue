@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p v-if="loading">Loading...</p>
+    <h2 v-if="loading">Loading...</h2>
     <p v-else-if="error">{{ error }}</p>
 
     <div v-if="this.isAuthenticated">
