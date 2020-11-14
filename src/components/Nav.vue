@@ -1,11 +1,17 @@
 <template>
-  <nav>
+  <nav class="indigo darken-4">
     <h1>
       <router-link :to="{ name: 'Home' }">FeedMe</router-link>
     </h1>
+
     <div v-if="this.isAuthenticated">
-      <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
-      <button @click="logout">
+      <ul>
+        <li>
+          <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
+        </li>
+      </ul>
+
+      <button class="btn" @click="logout">
         Logout
       </button>
     </div>
@@ -49,5 +55,24 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+}
+
+ul {
+  display: inline;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: auto 1rem;
+}
+
+.btn {
+  background-color: #1565c0;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: white;
+  color: #1565c0;
 }
 </style>
