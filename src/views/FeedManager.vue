@@ -13,8 +13,8 @@
           <input id="url" class="validate" type="text" v-model="url" required />
           <label for="url">Enter the RSS feed URL</label>
         </div>
-        <button class="btn" type="submit">
-          Subscribe
+        <button class="btn" type="submit" :disabled="isLoading">
+          {{ isLoading ? "Subscribing..." : "Subscribe" }}
         </button>
       </form>
     </section>
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       url: "",
+      isLoading: false,
       hasSuccess: false,
       hasError: false
     };
@@ -41,6 +42,8 @@ export default {
         return;
       }
 
+      this.isLoading = true;
+
       post("/subscription", { url: this.url })
         .then(({ status }) => {
           if (status === 200) {
@@ -50,6 +53,9 @@ export default {
         })
         .catch(() => {
           this.hasError = true;
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     }
   }
