@@ -43,6 +43,8 @@ export default {
       }
 
       this.isLoading = true;
+      this.hasSuccess = false;
+      this.hasError = false;
 
       post("/subscription", { url: this.url })
         .then(({ status }) => {
