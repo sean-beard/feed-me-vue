@@ -52,6 +52,10 @@ export default {
             this.hasSuccess = true;
             this.url = "";
           }
+
+          if (status === 500) {
+            this.hasError = true;
+          }
         })
         .catch(() => {
           this.hasError = true;
