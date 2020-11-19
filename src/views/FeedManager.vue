@@ -3,10 +3,8 @@
     <section>
       <h2>Subscribe to a feed</h2>
 
-      <p v-if="hasSuccess">Successfully subscribed!</p>
-      <p v-else-if="hasError">
-        Oops! There was an error subscribing. Please try again later.
-      </p>
+      <p v-if="successMsg">{{ successMsg }}</p>
+      <h2 v-else-if="error">{{ error }}</h2>
 
       <form @submit="subscribe">
         <div class="input-field">
@@ -30,8 +28,8 @@ export default {
     return {
       url: "",
       isLoading: false,
-      hasSuccess: false,
-      hasError: false
+      successMsg: "",
+      error: ""
     };
   },
   methods: {
@@ -43,22 +41,24 @@ export default {
       }
 
       this.isLoading = true;
-      this.hasSuccess = false;
-      this.hasError = false;
+      this.successMsg = "";
+      this.error = "";
 
       post("/subscription", { url: this.url })
         .then(({ status }) => {
           if (status === 200) {
-            this.hasSuccess = true;
+            this.successMsg = "Successfully subscribed!";
             this.url = "";
           }
 
           if (status === 500) {
-            this.hasError = true;
+            this.error =
+              "Oops! There was an error subscribing. Please try again later.";
           }
         })
         .catch(() => {
-          this.hasError = true;
+          this.error =
+            "Oops! There was an error subscribing. Please try again later.";
         })
         .finally(() => {
           this.isLoading = false;
