@@ -38,8 +38,13 @@ export default {
       this.loading = true;
 
       get("/feed")
-        .then(feeds => {
-          const feedItems = feeds.map(({ name, items }) =>
+        .then(({ status, feeds }) => {
+          if (status === 500) {
+            this.error = "There was an error loading your feeds";
+            return;
+          }
+
+          const feedItems = (feeds || []).map(({ name, items }) =>
             items.map(item => {
               item.feedName = name;
               item.pubDate = new Date(item.pubDate);
