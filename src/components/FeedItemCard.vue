@@ -35,7 +35,8 @@ p + p {
   max-width: 750px;
 }
 
-.card-panel:hover {
+.card-panel:hover,
+.card-panel:focus {
   background-color: #bbbbbb;
 }
 

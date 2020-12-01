@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 v-if="loading">Loading...</h2>
-    <p v-else-if="error">{{ error }}</p>
+    <h2 v-else-if="error">{{ error }}</h2>
 
     <div v-if="this.isAuthenticated">
       <section>
@@ -38,8 +38,13 @@ export default {
       this.loading = true;
 
       get("/feed")
-        .then(feeds => {
-          const feedItems = feeds.map(({ name, items }) =>
+        .then(({ status, feeds }) => {
+          if (status === 500) {
+            this.error = "There was an error loading your feeds";
+            return;
+          }
+
+          const feedItems = (feeds || []).map(({ name, items }) =>
             items.map(item => {
               item.feedName = name;
               item.pubDate = new Date(item.pubDate);

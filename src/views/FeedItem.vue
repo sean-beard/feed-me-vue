@@ -3,6 +3,9 @@
     <button class="btn" @click="toggleReadStatus()">
       {{ item.isRead ? "Mark as unread" : "Mark as read" }}
     </button>
+
+    <h2 if="error">{{ error }}</h2>
+
     <div v-if="!!item.description" v-html="item.description"></div>
   </div>
 </template>
@@ -15,7 +18,8 @@ export default {
   name: "FeedItem",
   data() {
     return {
-      item: {}
+      item: {},
+      error: ""
     };
   },
   computed: {
@@ -24,7 +28,12 @@ export default {
   methods: {
     toggleReadStatus() {
       post("/item", { id: this.item.id, isRead: !this.item.isRead }).then(
-        ({ isRead }) => {
+        ({ status, isRead }) => {
+          if (status === 500) {
+            this.error = "There was an error updating the status of this item";
+            return;
+          }
+
           this.item.isRead = isRead;
         }
       );
@@ -32,12 +41,17 @@ export default {
   },
   created() {
     if (!this.isAuthenticated) {
-      // TODO: handle this
+      this.error = "Oops! You must be logged in to do that";
       return;
     }
 
-    get(`/item/${this.$route.params.id}`).then(feedItem => {
-      this.item = feedItem;
+    get(`/item/${this.$route.params.id}`).then(({ status, item }) => {
+      if (status === 500) {
+        this.error = "There was an error loading this feed item";
+        return;
+      }
+
+      this.item = item;
     });
   }
 };
