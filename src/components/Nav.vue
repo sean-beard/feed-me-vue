@@ -51,6 +51,8 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -63,6 +65,7 @@ ul {
 }
 
 h1 {
+  font-family: Pacifico, Avenir, Helvetica, Arial, sans-serif;
   font-size: 2rem;
   margin: auto 1rem;
 }
