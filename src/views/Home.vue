@@ -17,9 +17,23 @@
 
 <script>
 import { mapState } from "vuex";
-import { flatten } from "ramda";
+import { pipe, map, flatten, sort } from "ramda";
 import FeedItemCard from "@/components/FeedItemCard";
 import { get } from "@/utils/api";
+
+const getFeedItemsFromFeed = ({ name, items }) =>
+  items.map(item => {
+    item.feedName = name;
+    item.pubDate = new Date(item.pubDate);
+    return item;
+  });
+
+const getFeedItems = feeds =>
+  pipe(
+    map(getFeedItemsFromFeed),
+    flatten,
+    sort((a, b) => b.pubDate - a.pubDate)
+  )(feeds || []);
 
 export default {
   name: "Home",
@@ -43,17 +57,7 @@ export default {
             this.error = "There was an error loading your feeds";
             return;
           }
-
-          const feedItems = (feeds || []).map(({ name, items }) =>
-            items.map(item => {
-              item.feedName = name;
-              item.pubDate = new Date(item.pubDate);
-              return item;
-            })
-          );
-          this.feedItems = flatten(feedItems).sort(
-            (a, b) => b.pubDate - a.pubDate
-          );
+          this.feedItems = getFeedItems(feeds);
         })
         .catch(() => {
           this.error = "There was an error loading your feeds";
