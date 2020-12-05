@@ -11,7 +11,7 @@ const errorMessage = "Oops! There was an error logging in. Please try again late
 
 export default {
   methods: {
-    ...mapActions(["setIsAuthenticated"])
+    ...mapActions(["setUser"])
   },
   data() {
     return {
@@ -23,9 +23,9 @@ export default {
     const code = urlParams.get("code");
 
     get(`/auth/github/callback?code=${code}`, { useAuth: false }).then(
-      ({ status, token }) => {
+      ({ status, user }) => {
         if (status === 200) {
-          this.setIsAuthenticated({ isAuthenticated: true, authToken: token });
+          this.setUser(user);
           this.$router.push({ name: "Home" });
         }
 
