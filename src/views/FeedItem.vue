@@ -44,7 +44,8 @@ export default {
       this.error = "Oops! You must be logged in to do that";
       return;
     }
-
+  },
+  mounted() {
     get(`/item/${this.$route.params.id}`).then(({ status, item }) => {
       if (status === 500) {
         this.error = "There was an error loading this feed item";
