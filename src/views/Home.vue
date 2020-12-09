@@ -8,6 +8,11 @@
         <div v-for="item in feedItems" :key="item.id">
           <FeedItemCard :item="item" />
         </div>
+
+        <h2 v-if="!feedItems.length && !error && !loading">
+          Nothing to see here... Head over to "Manage Feeds" to subsribe to your
+          first feed!
+        </h2>
       </section>
     </div>
 
