@@ -2,6 +2,8 @@
 
 RSS feed management application allowing users to get a personalized newsfeed that they create.
 
+[FeedMe Staging app](https://feed-me-staging.netlify.app/)
+
 ## Development
 
 ```
