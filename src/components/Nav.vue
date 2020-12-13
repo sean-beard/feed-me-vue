@@ -23,34 +23,17 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import { get } from "@/utils/api";
+import navMixin from "@/mixins/navMixin";
 
 export default {
   name: "Nav",
-  data() {
-    return {
-      apiBaseUrl: process.env.VUE_APP_BASE_API_URL
-    };
-  },
-  computed: {
-    ...mapState(["isAuthenticated"])
-  },
-  methods: {
-    ...mapActions(["setIsAuthenticated"]),
-    logout() {
-      get("/auth/logout", { useAuth: false }).then(({ status }) => {
-        if (status === 200) {
-          this.setIsAuthenticated({ isAuthenticated: false, token: "" });
-          this.$router.push({ name: "Home" });
-        }
-      });
-    }
-  }
+  mixins: [navMixin]
 };
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+
 nav {
   display: flex;
   justify-content: space-between;
@@ -63,6 +46,7 @@ ul {
 }
 
 h1 {
+  font-family: Pacifico, Avenir, Helvetica, Arial, sans-serif;
   font-size: 2rem;
   margin: auto 1rem;
 }
@@ -75,5 +59,11 @@ h1 {
 .btn:focus {
   background-color: white;
   color: #1565c0;
+}
+
+@media (max-width: 37.5em) {
+  nav {
+    display: none;
+  }
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Nav />
+    <MobileNav />
     <router-view />
   </div>
 </template>
@@ -10,10 +11,11 @@ import "materialize-css/dist/css/materialize.min.css";
 import "materialize-css/dist/js/materialize.min";
 
 import Nav from "./components/Nav";
+import MobileNav from "./components/MobileNav";
 
 export default {
   name: "App",
-  components: { Nav }
+  components: { Nav, MobileNav }
 };
 </script>
 

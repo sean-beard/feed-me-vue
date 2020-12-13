@@ -14,12 +14,22 @@ export default new Vuex.Store({
     authToken: ""
   },
   mutations: {
+    updateUser(state, user) {
+      state.user = user;
+    },
     updateAuthStatus(state, { isAuthenticated, authToken }) {
       state.isAuthenticated = isAuthenticated;
       state.authToken = authToken;
     }
   },
   actions: {
+    setUser({ commit }, user) {
+      commit("updateUser", user);
+      commit("updateAuthStatus", {
+        isAuthenticated: true,
+        authToken: user.token
+      });
+    },
     setIsAuthenticated({ commit }, payload) {
       commit("updateAuthStatus", payload);
     }
