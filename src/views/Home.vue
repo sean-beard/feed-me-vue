@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 v-if="loading">Loading...</h2>
+    <div v-if="loading"><FeedSkeleton /></div>
     <h2 v-else-if="error">{{ error }}</h2>
 
     <div v-if="this.isAuthenticated">
@@ -23,6 +23,7 @@
 <script>
 import { mapState } from "vuex";
 import { pipe, map, flatten, sort } from "ramda";
+import FeedSkeleton from "@/components/FeedSkeleton";
 import FeedItemCard from "@/components/FeedItemCard";
 import { get } from "@/utils/api";
 
@@ -43,7 +44,8 @@ const getFeedItems = feeds =>
 export default {
   name: "Home",
   components: {
-    FeedItemCard
+    FeedItemCard,
+    FeedSkeleton
   },
   data() {
     return {
