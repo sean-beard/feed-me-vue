@@ -1,12 +1,14 @@
 <template>
   <div>
-    <button class="btn" @click="toggleReadStatus()">
-      {{ item.isRead ? "Mark as unread" : "Mark as read" }}
-    </button>
+    <div v-if="isLoading">Loading...</div>
+    <h2 v-else-if="error">{{ error }}</h2>
+    <div v-else>
+      <button class="btn" @click="toggleReadStatus()">
+        {{ item.isRead ? "Mark as unread" : "Mark as read" }}
+      </button>
 
-    <h2 if="error">{{ error }}</h2>
-
-    <div v-if="!!item.description" v-html="item.description"></div>
+      <div v-if="!!item.description" v-html="item.description"></div>
+    </div>
   </div>
 </template>
 
@@ -19,6 +21,7 @@ export default {
   data() {
     return {
       item: {},
+      isLoading: false,
       error: ""
     };
   },
@@ -46,14 +49,20 @@ export default {
     }
   },
   mounted() {
-    get(`/item/${this.$route.params.id}`).then(({ status, item }) => {
-      if (status === 500) {
-        this.error = "There was an error loading this feed item";
-        return;
-      }
+    this.isLoading = true;
 
-      this.item = item;
-    });
+    get(`/item/${this.$route.params.id}`)
+      .then(({ status, item }) => {
+        if (status === 500) {
+          this.error = "There was an error loading this feed item";
+          return;
+        }
+
+        this.item = item;
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 };
 </script>
