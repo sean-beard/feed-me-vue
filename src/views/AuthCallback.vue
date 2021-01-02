@@ -7,7 +7,8 @@
 import { mapActions } from "vuex";
 import { get } from "@/utils/api";
 
-const errorMessage = "Oops! There was an error logging in. Please try again later.";
+const errorMessage =
+  "Oops! There was an error logging in. Please try again later.";
 
 export default {
   methods: {
@@ -15,15 +16,15 @@ export default {
   },
   data() {
     return {
-      error: ''
-    }
+      error: ""
+    };
   },
   created() {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
 
-    get(`/auth/github/callback?code=${code}`, { useAuth: false }).then(
-      ({ status, user }) => {
+    get(`/auth/github/callback?code=${code}`, { useAuth: false })
+      .then(({ status, user }) => {
         if (status === 200) {
           this.setUser(user);
           this.$router.push({ name: "Home" });
@@ -32,10 +33,10 @@ export default {
         if (status === 500) {
           this.error = errorMessage;
         }
-      }
-    ).catch(() => {
-      this.error = errorMessage;
-    });
+      })
+      .catch(() => {
+        this.error = errorMessage;
+      });
   }
 };
 </script>
