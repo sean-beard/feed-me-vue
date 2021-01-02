@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading...</div>
+    <div v-if="isLoading"><FeedItemSkeleton /></div>
     <h2 v-else-if="error">{{ error }}</h2>
     <div v-else>
       <button class="btn" @click="toggleReadStatus()">
@@ -15,9 +15,11 @@
 <script>
 import { mapState } from "vuex";
 import { get, post } from "@/utils/api";
+import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
 
 export default {
   name: "FeedItem",
+  components: { FeedItemSkeleton },
   data() {
     return {
       item: {},
