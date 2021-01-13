@@ -10,8 +10,8 @@
         </div>
 
         <h2 v-if="!feedItems.length && !error && !loading">
-          Nothing to see here... Head over to "Manage Feeds" to subsribe to your
-          first feed!
+          Nothing to see here... Head over to "Manage Feeds" to subscribe to
+          your first feed!
         </h2>
       </section>
     </div>
