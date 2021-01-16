@@ -70,6 +70,7 @@ nav {
   display: flex;
   align-items: center;
   padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 ul {
