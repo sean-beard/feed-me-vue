@@ -17,7 +17,7 @@
     </div>
 
     <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
-      Login to Github
+      Login with Github
     </a>
   </nav>
 </template>
@@ -39,6 +39,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  margin-bottom: 2rem;
 }
 
 ul {

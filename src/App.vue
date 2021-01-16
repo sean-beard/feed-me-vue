@@ -2,7 +2,17 @@
   <div id="app">
     <Nav />
     <MobileNav />
-    <router-view />
+    <router-view class="main" />
+    <footer>
+      <a
+        href="https://github.com/sean-beard/feed-me"
+        target="blank"
+        rel="noopener"
+      >
+        <img src="./assets/GitHub_Logo.png" width="100" />
+        <img src="./assets/GitHub_Mark.png" width="44" />
+      </a>
+    </footer>
   </div>
 </template>
 
@@ -24,12 +34,20 @@ h2 {
   font-size: 2rem;
 }
 
+footer {
+  margin-top: 2rem;
+  padding-bottom: 1rem;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 #nav {
@@ -43,6 +61,10 @@ h2 {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.main {
+  flex: 1;
 }
 
 .btn {
