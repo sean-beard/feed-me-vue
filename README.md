@@ -4,6 +4,8 @@ RSS feed management application allowing users to get a personalized newsfeed th
 
 [FeedMe Staging app](https://feed-me-staging.netlify.app/)
 
+[FeedMe API](https://github.com/sean-beard/feed-me-api)
+
 ## Development
 
 ```
