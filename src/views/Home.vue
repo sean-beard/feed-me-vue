@@ -16,7 +16,7 @@
       </section>
     </div>
 
-    <!-- TODO: implement pre-login homepage -->
+    <PreLoginHome v-if="!this.isAuthenticated" />
   </div>
 </template>
 
@@ -25,6 +25,7 @@ import { mapState } from "vuex";
 import { pipe, map, flatten, sort } from "ramda";
 import FeedSkeleton from "@/components/FeedSkeleton";
 import FeedItemCard from "@/components/FeedItemCard";
+import PreLoginHome from "@/components/PreLoginHome";
 import { get } from "@/utils/api";
 
 const getFeedItemsFromFeed = ({ name, items }) =>
@@ -45,7 +46,8 @@ export default {
   name: "Home",
   components: {
     FeedItemCard,
-    FeedSkeleton
+    FeedSkeleton,
+    PreLoginHome
   },
   data() {
     return {
