@@ -17,7 +17,7 @@
     </div>
 
     <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
-      Login to Github
+      Login with Github
     </a>
   </nav>
 </template>
