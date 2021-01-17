@@ -1,18 +1,21 @@
 <template>
   <div>
     <section>
-      <SubscriptionForm />
+      <SubscriptionForm class="form" />
+      <Subscriptions />
     </section>
   </div>
 </template>
 
 <script>
 import SubscriptionForm from "@/components/SubscriptionForm";
+import Subscriptions from "@/components/Subscriptions.vue";
 
 export default {
   name: "FeedManager",
   components: {
-    SubscriptionForm
+    SubscriptionForm,
+    Subscriptions
   }
 };
 </script>
@@ -20,5 +23,9 @@ export default {
 <style scoped>
 h2 {
   font-size: 2rem;
+}
+
+.form {
+  margin-bottom: 5rem;
 }
 </style>

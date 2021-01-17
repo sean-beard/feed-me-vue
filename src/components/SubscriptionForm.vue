@@ -47,6 +47,7 @@ export default {
           if (status === 200) {
             this.successMsg = "Successfully subscribed!";
             this.url = "";
+            this.eventHub.$emit("subscribe");
           }
 
           if (status === 500) {
