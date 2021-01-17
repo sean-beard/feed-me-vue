@@ -2,7 +2,7 @@
   <div>
     <h2>Subscribe to a feed</h2>
 
-    <p v-if="successMsg">{{ successMsg }}</p>
+    <h3 v-if="successMsg" class="success">{{ successMsg }}</h3>
     <h3 v-else-if="error" class="error">{{ error }}</h3>
 
     <form @submit="subscribe">
@@ -74,9 +74,17 @@ export default {
   width: 80%;
 }
 
-.error {
-  color: maroon;
+.error,
+.success {
   font-size: 1.5em;
   margin-bottom: 2rem;
+}
+
+.error {
+  color: maroon;
+}
+
+.success {
+  color: darkgreen;
 }
 </style>
