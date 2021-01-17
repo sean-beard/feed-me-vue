@@ -25,3 +25,16 @@ export const post = async (path, body) => {
 
   return response.json();
 };
+
+export const deletion = async (path, body) => {
+  const response = await fetch(`${process.env.VUE_APP_BASE_API_URL}${path}`, {
+    method: "DELETE",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${store.getters.authToken}`
+    }
+  });
+
+  return response.json();
+};
