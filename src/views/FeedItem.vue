@@ -41,7 +41,6 @@ function addMaxWidth(el) {
 }
 
 function removeMaxWidth(el) {
-  console.log(el.style.maxWidth);
   if (el.style.maxWidth !== MAX_MOBILE_WIDTH) return;
 
   el.style.maxWidth = "unset";
