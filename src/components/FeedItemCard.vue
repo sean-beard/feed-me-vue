@@ -44,4 +44,10 @@ p + p {
   border-left: 4px solid #1a237e;
   font-weight: bold;
 }
+
+@media (max-width: 37.5em) {
+  .card-panel:focus {
+    background-color: initial;
+  }
+}
 </style>
