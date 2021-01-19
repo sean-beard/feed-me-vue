@@ -7,17 +7,19 @@
         {{ item.isRead ? "Mark as unread" : "Mark as read" }}
       </button>
 
-      <div ref="description">
-        <div v-if="!!item.description" v-html="item.description"></div>
-        <div v-else-if="item.youtubeEmbedUrl">
-          <iframe
-            width="560"
-            height="315"
-            :src="item.youtubeEmbedUrl"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+      <div class="description">
+        <div ref="description">
+          <div v-if="!!item.description" v-html="item.description"></div>
+          <div v-else-if="item.youtubeEmbedUrl">
+            <iframe
+              width="560"
+              height="315"
+              :src="item.youtubeEmbedUrl"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -145,5 +147,13 @@ export default {
 <style scoped>
 .btn {
   margin: 2rem 0;
+}
+
+@media (max-width: 37.5em) {
+  .description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>
