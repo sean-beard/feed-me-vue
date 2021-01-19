@@ -46,6 +46,7 @@ p + p {
 }
 
 @media (max-width: 37.5em) {
+  .card-panel:hover,
   .card-panel:focus {
     background-color: initial;
   }
