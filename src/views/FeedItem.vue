@@ -9,6 +9,16 @@
 
       <div ref="description">
         <div v-if="!!item.description" v-html="item.description"></div>
+        <div v-else-if="item.youtubeEmbedUrl">
+          <iframe
+            width="560"
+            height="315"
+            :src="item.youtubeEmbedUrl"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
   </div>
@@ -39,6 +49,11 @@ function removeMaxWidth(el) {
   (el.childNodes || []).forEach(x => {
     if (x.nodeType == 1) removeMaxWidth(x);
   });
+}
+
+function getParameterByName(url, name) {
+  const match = RegExp("[?&]" + name + "=([^&]*)").exec(url);
+  return match && decodeURIComponent(match[1].replace(/\+/g, " "));
 }
 
 export default {
@@ -86,6 +101,12 @@ export default {
         if (status === 500) {
           this.error = "There was an error loading this feed item";
           return;
+        }
+
+        if (item.url && item.url.indexOf("youtube.com")) {
+          const embedUrlBase = "https://www.youtube.com/embed";
+          const videoId = getParameterByName(item.url, "v");
+          item.youtubeEmbedUrl = `${embedUrlBase}/${videoId}`;
         }
 
         this.item = item;
