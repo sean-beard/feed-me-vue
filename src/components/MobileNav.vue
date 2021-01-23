@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mobile-nav">
     <nav class="indigo darken-4">
       <a href="#" data-target="slide-out" class="sidenav-trigger"
         ><i class="material-icons">menu</i></a
@@ -119,7 +119,7 @@ p {
 
 /* Tablet + Desktop */
 @media (min-width: 37.5em) {
-  nav {
+  .mobile-nav {
     display: none;
   }
 }
