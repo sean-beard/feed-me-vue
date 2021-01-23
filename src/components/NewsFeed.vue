@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="controls">
-      <label class="checkbox">
+      <label>
         <input type="checkbox" :value="true" v-model="areAllChecked" />
         <span class="visually-hidden">Select all items</span>
       </label>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="feed-row" v-for="item in items" :key="item.id">
-      <label class="checkbox">
+      <label>
         <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
         <span class="visually-hidden">{{ item.title }}</span>
       </label>
