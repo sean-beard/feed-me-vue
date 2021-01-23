@@ -29,10 +29,7 @@ p + p {
 
 .card-panel {
   display: block;
-  margin: 1rem auto;
   padding: 1rem;
-  width: 80%;
-  max-width: 750px;
 }
 
 .card-panel:hover,

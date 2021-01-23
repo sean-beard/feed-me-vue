@@ -73,16 +73,17 @@ export default {
   },
   methods: {
     toggleReadStatus() {
-      post("/item", { id: this.item.id, isRead: !this.item.isRead }).then(
-        ({ status, isRead }) => {
-          if (status === 500) {
-            this.error = "There was an error updating the status of this item";
-            return;
-          }
+      const newIsReadStatus = !this.item.isRead;
 
-          this.item.isRead = isRead;
-        }
-      );
+      post("/item", {
+        items: [{ id: this.item.id, isRead: newIsReadStatus }]
+      })
+        .then(() => {
+          this.item.isRead = newIsReadStatus;
+        })
+        .catch(() => {
+          this.error = "There was an error updating the status of this item";
+        });
     },
     handleWindowResize() {
       this.windowWidth = window.innerWidth;

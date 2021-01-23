@@ -5,9 +5,7 @@
 
     <div v-if="this.isAuthenticated">
       <section>
-        <div v-for="item in feedItems" :key="item.id">
-          <FeedItemCard :item="item" />
-        </div>
+        <NewsFeed v-if="feedItems.length" :items="feedItems" />
 
         <h2 v-if="!feedItems.length && !error && !loading">
           Nothing to see here... Head over to "Manage Feeds" to subscribe to
@@ -24,7 +22,7 @@
 import { mapState } from "vuex";
 import { pipe, map, flatten, sort } from "ramda";
 import FeedSkeleton from "@/components/FeedSkeleton";
-import FeedItemCard from "@/components/FeedItemCard";
+import NewsFeed from "@/components/NewsFeed.vue";
 import PreLoginHome from "@/components/PreLoginHome";
 import { get } from "@/utils/api";
 
@@ -45,9 +43,9 @@ const getFeedItems = feeds =>
 export default {
   name: "Home",
   components: {
-    FeedItemCard,
     FeedSkeleton,
-    PreLoginHome
+    PreLoginHome,
+    NewsFeed
   },
   data() {
     return {
