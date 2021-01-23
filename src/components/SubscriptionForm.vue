@@ -4,6 +4,23 @@
 
     <h3 v-if="successMsg" class="success">{{ successMsg }}</h3>
     <h3 v-else-if="error" class="error">{{ error }}</h3>
+    <div v-else-if="hasUnsupportedFormatError" class="error">
+      <p>Unsupported RSS feed format.</p>
+
+      <p>
+        Please
+        <a
+          :href="
+            `https://github.com/sean-beard/feed-me/issues/new?title=Unsupported%20RSS%20Format&body=URL:%20${this.url.trim()}`
+          "
+          target="_blank"
+          rel="noopener"
+        >
+          open an issue and include the URL
+        </a>
+        you've attempted to subscribe to so we can support it going forward.
+      </p>
+    </div>
 
     <form @submit="subscribe">
       <div class="input-field">
@@ -27,7 +44,8 @@ export default {
       url: "",
       isLoading: false,
       successMsg: "",
-      error: ""
+      error: "",
+      hasUnsupportedFormatError: false
     };
   },
   methods: {
@@ -41,6 +59,7 @@ export default {
       this.isLoading = true;
       this.successMsg = "";
       this.error = "";
+      this.hasUnsupportedFormatError = false;
 
       post("/subscription", { url: this.url })
         .then(({ status }) => {
@@ -53,6 +72,10 @@ export default {
           if (status === 500) {
             this.error =
               "Oops! There was an error subscribing. Please try again later.";
+          }
+
+          if (status === 415) {
+            this.hasUnsupportedFormatError = true;
           }
         })
         .catch(() => {

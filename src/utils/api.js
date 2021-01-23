@@ -23,7 +23,9 @@ export const post = async (path, body) => {
     }
   });
 
-  return response.json();
+  return response.status !== 200
+    ? { status: response.status }
+    : response.json();
 };
 
 export const deletion = async (path, body) => {
