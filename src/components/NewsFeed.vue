@@ -1,20 +1,43 @@
 <template>
   <div>
     <div class="controls">
-      <label>
-        <input type="checkbox" :value="true" v-model="areAllChecked" />
-        <span class="visually-hidden">Select all items</span>
+      <div class="status-controls">
+        <label>
+          <input type="checkbox" :value="true" v-model="areAllChecked" />
+          <span class="visually-hidden">Select all items</span>
+        </label>
+
+        <div class="btn-wrapper" v-if="checkedItemIds.length">
+          <button class="btn" @click="handleMarkAll('read')">
+            Mark as Read
+          </button>
+          <button class="btn" @click="handleMarkAll('unread')">
+            Mark as Unread
+          </button>
+        </div>
+      </div>
+
+      <label class="desktop-filter">
+        <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
+        <span>Filter by unread</span>
       </label>
 
-      <div class="btn-wrapper" v-if="checkedItemIds.length">
-        <button class="btn" @click="handleMarkAll('read')">Mark as Read</button>
-        <button class="btn" @click="handleMarkAll('unread')">
-          Mark as Unread
-        </button>
-      </div>
+      <label
+        class="btn mobile-filter"
+        :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
+      >
+        <input
+          type="checkbox"
+          class="visually-hidden"
+          :value="true"
+          v-model="shouldFilterUnread"
+        />
+        <span class="visually-hidden">Filter by unread</span>
+        <i class="material-icons">filter_list</i>
+      </label>
     </div>
 
-    <div class="feed-row" v-for="item in items" :key="item.id">
+    <div class="feed-row" v-for="item in renderedItems" :key="item.id">
       <label>
         <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
         <span class="visually-hidden">{{ item.title }}</span>
@@ -39,8 +62,17 @@ export default {
   data() {
     return {
       areAllChecked: false,
-      checkedItemIds: []
+      checkedItemIds: [],
+      shouldFilterUnread: false
     };
+  },
+  computed: {
+    filteredItems() {
+      return this.items.filter(item => !item.isRead);
+    },
+    renderedItems() {
+      return this.shouldFilterUnread ? this.filteredItems : this.items;
+    }
   },
   methods: {
     handleMarkAll(status) {
@@ -76,7 +108,7 @@ export default {
   watch: {
     areAllChecked(selectEverything) {
       this.checkedItemIds = selectEverything
-        ? this.items.map(item => item.id)
+        ? this.renderedItems.map(item => item.id)
         : [];
     }
   }
@@ -91,6 +123,7 @@ button + button {
 .controls,
 .feed-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin: 1rem auto;
   width: 80%;
@@ -102,11 +135,26 @@ button + button {
   justify-content: center;
 }
 
+.status-controls {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
 .full {
   flex: 1;
 }
 
-.visually-hidden {
+.desktop-filter {
+  margin-left: 1rem;
+}
+
+.mobile-filter {
+  display: none;
+}
+
+.visually-hidden,
+.mobile-filter [type="checkbox"] + span:not(.lever) {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -115,6 +163,22 @@ button + button {
   padding: 0;
   clip: rect(0 0 0 0);
   overflow: hidden;
+}
+
+.btn.mobile-filtered,
+.btn.mobile-filtered,
+.btn.mobile-filtered:hover,
+.btn.mobile-filtered:focus {
+  background-color: #1a237e;
+  color: white;
+}
+
+.btn.mobile-unfiltered,
+.btn.mobile-unfiltered,
+.btn.mobile-unfiltered:hover,
+.btn.mobile-unfiltered:focus {
+  background-color: white;
+  color: #1a237e;
 }
 
 [type="checkbox"]:checked + span:not(.lever)::before {
@@ -139,6 +203,14 @@ button + button {
   .controls,
   .feed-row {
     min-height: 6rem;
+  }
+
+  .desktop-filter {
+    display: none;
+  }
+
+  .mobile-filter {
+    display: block;
   }
 }
 </style>
