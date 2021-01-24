@@ -2,7 +2,7 @@
   <div>
     <div class="controls">
       <div class="status-controls">
-        <label>
+        <label v-if="renderedItems.length">
           <input type="checkbox" :value="true" v-model="areAllChecked" />
           <span class="visually-hidden">Select all items</span>
         </label>
@@ -46,6 +46,10 @@
       </label>
       <FeedItemCard class="full" :item="item" />
     </div>
+
+    <h2 v-if="!renderedItems.length">
+      Woohoo! You're all caught up!
+    </h2>
   </div>
 </template>
 
