@@ -17,24 +17,26 @@
         </div>
       </div>
 
-      <label class="desktop-filter">
-        <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
-        <span>Filter by unread</span>
-      </label>
+      <div v-if="filteredItems.length !== items.length">
+        <label class="desktop-filter">
+          <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
+          <span>Filter by unread</span>
+        </label>
 
-      <label
-        class="btn mobile-filter"
-        :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
-      >
-        <input
-          type="checkbox"
-          class="visually-hidden"
-          :value="true"
-          v-model="shouldFilterUnread"
-        />
-        <span class="visually-hidden">Filter by unread</span>
-        <i class="material-icons">filter_list</i>
-      </label>
+        <label
+          class="btn mobile-filter"
+          :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
+        >
+          <input
+            type="checkbox"
+            class="visually-hidden"
+            :value="true"
+            v-model="shouldFilterUnread"
+          />
+          <span class="visually-hidden">Filter by unread</span>
+          <i class="material-icons">filter_list</i>
+        </label>
+      </div>
     </div>
 
     <div class="feed-row" v-for="item in renderedItems" :key="item.id">
@@ -179,6 +181,11 @@ button + button {
 .btn.mobile-unfiltered:focus {
   background-color: white;
   color: #1a237e;
+}
+
+[type="checkbox"] + span:not(.lever) {
+  color: #1a237e;
+  font-weight: bold;
 }
 
 [type="checkbox"]:checked + span:not(.lever)::before {
