@@ -8,8 +8,9 @@
         <NewsFeed v-if="feedItems.length" :items="feedItems" />
 
         <h2 v-if="!feedItems.length && !error && !loading">
-          Nothing to see here... Head over to "Manage Feeds" to subscribe to
-          your first feed!
+          Nothing to see here... Head over to
+          <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
+          to subscribe to your first feed!
         </h2>
       </section>
     </div>
