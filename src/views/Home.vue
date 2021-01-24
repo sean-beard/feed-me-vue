@@ -84,3 +84,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+h2 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+</style>
