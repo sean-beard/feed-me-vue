@@ -1,35 +1,43 @@
 # FeedMe Frontend
 
-RSS feed management application allowing users to get a personalized newsfeed that they create.
+RSS feed reader allowing users to curate a truly personalized newsfeed.
 
-[FeedMe Staging app](https://feed-me-staging.netlify.app/)
+Users authenticate via GitHub and can subscribe to RSS feeds. 
 
-[FeedMe API](https://github.com/sean-beard/feed-me-api)
+<img src="demo.gif" width="600"></img>
 
 ## Development
 
-```
-yarn install
-```
+The [FeedMe API](https://github.com/sean-beard/feed-me-api) is used in this application to manage users, feed content and subscriptions.
 
-### Compiles and hot-reloads for development
+### Getting started
 
-```
-yarn serve
-```
+Get the dependencies
 
-### Compiles and minifies for production
-
-```
-yarn build
+```bash
+$ yarn install
 ```
 
-### Lints and fixes files
+Compile and hot-reload for development
 
+```bash
+$ yarn serve
 ```
-yarn lint
+
+Compile and minify for production
+
+```bash
+$ yarn build
 ```
 
-### Customize configuration
+Lint and fix files
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```bash
+$ yarn lint
+```
+
+### Deployment
+
+This project uses [Netlify](https://www.netlify.com/) for deployment. The frontend is deployed to the Staging environment when code gets merged. Releases are promoted to Production manually via Netlify.
+
+[FeedMe Staging app](https://feed-me-staging.netlify.app/)
