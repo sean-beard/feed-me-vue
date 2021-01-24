@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { post } from "@/utils/api";
+import { put } from "@/utils/api";
 import FeedItemCard from "./FeedItemCard.vue";
 
 export default {
@@ -85,7 +85,7 @@ export default {
       }));
 
       // TODO: catch/handle error
-      post("/item", { items: payload }).then(({ status }) => {
+      put("/item", { items: payload }).then(({ status }) => {
         if (status !== 200) {
           // TODO: catch/handle error
           return;

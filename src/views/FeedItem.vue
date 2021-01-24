@@ -28,7 +28,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { get, post } from "@/utils/api";
+import { get, put } from "@/utils/api";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
 
 const MOBILE_BREAKPOINT = 600;
@@ -75,7 +75,7 @@ export default {
     toggleReadStatus() {
       const newIsReadStatus = !this.item.isRead;
 
-      post("/item", {
+      put("/item", {
         items: [{ id: this.item.id, isRead: newIsReadStatus }]
       })
         .then(() => {

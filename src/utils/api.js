@@ -16,6 +16,9 @@ export const get = async (path, opts = { useAuth: true }) => {
 export const post = async (path, body) =>
   requestWithBody({ method: "POST", path, body });
 
+export const put = async (path, body) =>
+  requestWithBody({ method: "PUT", path, body });
+
 export const deletion = async (path, body) =>
   requestWithBody({ method: "DELETE", path, body });
 
