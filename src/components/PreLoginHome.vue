@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="hero-container">
+      <p>TEST</p>
       <p>
         The open source RSS feed reader designed to put <em>you</em> in control
         of the news that's important
