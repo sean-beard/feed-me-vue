@@ -38,6 +38,6 @@ $ yarn lint
 
 ### Deployment
 
-This project uses [Netlify](https://www.netlify.com/) for deployment. The frontend is deployed to the Staging environment when code gets merged. Releases are promoted to Production manually via Netlify.
+This project uses [Netlify](https://www.netlify.com/) for deployment. The frontend is deployed to the Production environment when code gets merged. Preview deployments are used to test updates to the application before they make it to Production.
 
 [FeedMe Staging app](https://feed-me-staging.netlify.app/)
