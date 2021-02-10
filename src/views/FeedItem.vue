@@ -7,10 +7,10 @@
         {{ item.isRead ? "Mark as unread" : "Mark as read" }}
       </button>
 
-      <div class="description">
-        <div ref="description">
-          <div v-if="!!item.description" v-html="item.description"></div>
-          <div v-else-if="item.youtubeEmbedUrl">
+      <div class="description" ref="description">
+        <div v-if="!!item.description" v-html="item.description"></div>
+        <div class="video-container" v-else-if="item.youtubeEmbedUrl">
+          <div class="video-wrapper">
             <iframe
               width="560"
               height="315"
@@ -150,11 +150,31 @@ export default {
   margin: 2rem 0;
 }
 
+@media (min-width: 37.5em) {
+  .video-container {
+    width: 80vw;
+    margin: 3rem auto;
+  }
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+  }
+  .video-wrapper iframe,
+  .video-wrapper embed,
+  .video-wrapper object {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 @media (max-width: 37.5em) {
   .description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin: 3rem auto;
   }
 }
 </style>
