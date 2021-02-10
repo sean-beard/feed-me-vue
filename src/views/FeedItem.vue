@@ -150,6 +150,10 @@ export default {
   margin: 2rem 0;
 }
 
+.description {
+  padding: 3rem;
+}
+
 @media (min-width: 37.5em) {
   .video-container {
     width: 80vw;
@@ -175,6 +179,7 @@ export default {
 @media (max-width: 37.5em) {
   .description {
     margin: 3rem auto;
+    padding: 0;
   }
 }
 </style>
