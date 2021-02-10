@@ -8,7 +8,18 @@
       </button>
 
       <div class="description" ref="description">
-        <div v-if="!!item.description" v-html="item.description"></div>
+        <div v-if="!!item.description">
+          <div v-if="item.mediaType === 'audio/mpeg'">
+            <figure>
+              <audio controls :src="item.mediaUrl">
+                Your browser does not support the
+                <code>audio</code> element.
+              </audio>
+              <figcaption>{{ item.description }}</figcaption>
+            </figure>
+          </div>
+          <div v-else v-html="item.description"></div>
+        </div>
         <div class="video-container" v-else-if="item.youtubeEmbedUrl">
           <div class="video-wrapper">
             <iframe
@@ -146,6 +157,11 @@ export default {
 </script>
 
 <style scoped>
+audio {
+  margin-bottom: 3rem;
+  width: 75%;
+}
+
 .btn {
   margin: 2rem 0;
 }
