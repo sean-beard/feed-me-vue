@@ -197,6 +197,7 @@ button + button {
   border-bottom-color: #1a237e;
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   button + button {
     margin-left: 0;

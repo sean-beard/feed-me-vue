@@ -117,6 +117,7 @@ p {
   font-size: 1.5em;
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   .row {
     padding: 0 2rem;

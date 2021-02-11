@@ -54,6 +54,7 @@ p {
   text-transform: none;
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   .hero-container {
     width: 90vw;

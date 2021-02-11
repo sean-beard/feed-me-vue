@@ -62,6 +62,7 @@ h1 {
   color: #1565c0;
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   nav {
     display: none;
