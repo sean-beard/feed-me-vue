@@ -12,7 +12,7 @@ import SubscriptionForm from "@/components/SubscriptionForm";
 import Subscriptions from "@/components/Subscriptions.vue";
 
 export default {
-  name: "FeedManager",
+  name: "FeedManagerPage",
   components: {
     SubscriptionForm,
     Subscriptions

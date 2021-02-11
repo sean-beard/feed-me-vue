@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AuthCallback from "../views/AuthCallback.vue";
 import FeedItemPage from "../views/FeedItemPage.vue";
-import FeedManager from "../views/FeedManager.vue";
+import FeedManagerPage from "../views/FeedManagerPage.vue";
 
 Vue.use(VueRouter);
 
@@ -25,8 +25,8 @@ const routes = [
   },
   {
     path: "/manage",
-    name: "FeedManager",
-    component: FeedManager
+    name: "FeedManagerPage",
+    component: FeedManagerPage
   }
 ];
 

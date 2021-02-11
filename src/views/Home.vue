@@ -9,7 +9,9 @@
 
         <h2 v-if="!feedItems.length && !error && !loading">
           Nothing to see here... Head over to
-          <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
+          <router-link :to="{ name: 'FeedManagerPage' }">
+            Manage Feeds
+          </router-link>
           to subscribe to your first feed!
         </h2>
       </section>
