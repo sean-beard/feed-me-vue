@@ -42,6 +42,7 @@ p + p {
   font-weight: bold;
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   .card-panel:hover,
   .card-panel:focus {

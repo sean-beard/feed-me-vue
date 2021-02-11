@@ -170,6 +170,7 @@ audio {
   padding: 3rem;
 }
 
+/* Tablet + Desktop */
 @media (min-width: 37.5em) {
   .video-container {
     width: 80vw;
@@ -192,6 +193,7 @@ audio {
   }
 }
 
+/* Mobile */
 @media (max-width: 37.5em) {
   .description {
     margin: 3rem auto;
