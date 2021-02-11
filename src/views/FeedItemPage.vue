@@ -73,7 +73,7 @@ function getParameterByName(url, name) {
 }
 
 export default {
-  name: "FeedItem",
+  name: "FeedItemPage",
   components: { FeedItemSkeleton },
   data() {
     return {
