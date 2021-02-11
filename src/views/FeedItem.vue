@@ -10,8 +10,12 @@
       <div class="description" ref="description">
         <div v-if="!!item.description">
           <div v-if="item.mediaType === 'audio/mpeg'">
+            <button class="btn" @click="handlePlaybackRateChange">
+              {{ playbackRate + "x" }}
+            </button>
+
             <figure>
-              <audio controls :src="item.mediaUrl">
+              <audio ref="audioRef" controls :src="item.mediaUrl">
                 Your browser does not support the
                 <code>audio</code> element.
               </audio>
@@ -76,7 +80,8 @@ export default {
       item: {},
       isLoading: false,
       error: "",
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      playbackRate: 1
     };
   },
   computed: {
@@ -98,6 +103,27 @@ export default {
     },
     handleWindowResize() {
       this.windowWidth = window.innerWidth;
+    },
+    handlePlaybackRateChange() {
+      const audioElement = this.$refs.audioRef;
+
+      if (!audioElement) return;
+
+      switch (this.playbackRate) {
+        case 1:
+          this.playbackRate = 1.5;
+          break;
+        case 1.5:
+          this.playbackRate = 2;
+          break;
+        case 2:
+          this.playbackRate = 1;
+          break;
+        default:
+          this.playbackRate = 1;
+      }
+
+      audioElement.playbackRate = this.playbackRate;
     }
   },
   created() {
@@ -164,6 +190,7 @@ audio {
 
 .btn {
   margin: 2rem 0;
+  min-width: 100px;
 }
 
 .description {
