@@ -173,7 +173,8 @@ audio {
 /* Tablet + Desktop */
 @media (min-width: 37.5em) {
   .video-container {
-    width: 80vw;
+    width: 80%;
+    max-width: 1280px;
     margin: 3rem auto;
   }
 
