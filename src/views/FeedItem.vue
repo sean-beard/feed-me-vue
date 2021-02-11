@@ -186,6 +186,7 @@ export default {
 audio {
   margin-bottom: 3rem;
   width: 75%;
+  max-width: 1280px;
 }
 
 .btn {
@@ -218,6 +219,13 @@ audio {
     left: 0;
     width: 100%;
     height: 100%;
+  }
+}
+
+/* Tablet */
+@media (max-width: 48em) {
+  audio {
+    width: 100%;
   }
 }
 
