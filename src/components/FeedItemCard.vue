@@ -2,7 +2,7 @@
   <router-link
     class="card-panel indigo-text text-darken-4"
     :class="{ unread: !item.isRead }"
-    :to="{ name: 'FeedItem', params: { id: this.item.id } }"
+    :to="{ name: 'FeedItemPage', params: { id: this.item.id } }"
   >
     <p>{{ item.title }}</p>
     <p>{{ item.feedName }}</p>

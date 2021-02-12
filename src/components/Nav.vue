@@ -7,7 +7,9 @@
     <div v-if="this.isAuthenticated">
       <ul>
         <li>
-          <router-link :to="{ name: 'FeedManager' }">Manage Feeds</router-link>
+          <router-link :to="{ name: 'FeedManagerPage' }">
+            Manage Feeds
+          </router-link>
         </li>
       </ul>
 

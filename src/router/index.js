@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AuthCallback from "../views/AuthCallback.vue";
-import FeedItem from "../views/FeedItem.vue";
-import FeedManager from "../views/FeedManager.vue";
+import FeedItemPage from "../views/FeedItemPage.vue";
+import FeedManagerPage from "../views/FeedManagerPage.vue";
 
 Vue.use(VueRouter);
 
@@ -20,13 +20,13 @@ const routes = [
   },
   {
     path: "/item/:id",
-    name: "FeedItem",
-    component: FeedItem
+    name: "FeedItemPage",
+    component: FeedItemPage
   },
   {
     path: "/manage",
-    name: "FeedManager",
-    component: FeedManager
+    name: "FeedManagerPage",
+    component: FeedManagerPage
   }
 ];
 

@@ -26,7 +26,7 @@
           </router-link>
         </li>
         <li>
-          <router-link class="sidenav-close" :to="{ name: 'FeedManager' }">
+          <router-link class="sidenav-close" :to="{ name: 'FeedManagerPage' }">
             Manage Feeds
           </router-link>
         </li>

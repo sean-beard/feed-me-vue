@@ -7,6 +7,8 @@
         {{ item.isRead ? "Mark as unread" : "Mark as read" }}
       </button>
 
+      <h2 class="title">{{ item.title }}</h2>
+
       <div class="description" ref="description">
         <div v-if="!!item.description">
           <div v-if="item.mediaType === 'audio/mpeg'">
@@ -73,7 +75,7 @@ function getParameterByName(url, name) {
 }
 
 export default {
-  name: "FeedItem",
+  name: "FeedItemPage",
   components: { FeedItemSkeleton },
   data() {
     return {
@@ -190,8 +192,12 @@ audio {
 }
 
 .btn {
-  margin: 2rem 0;
+  margin: 2rem 0 4rem 0;
   min-width: 100px;
+}
+
+.title {
+  margin: 0 2rem;
 }
 
 .description {
