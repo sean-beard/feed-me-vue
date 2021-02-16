@@ -18,18 +18,10 @@
           />
           <div v-else v-html="item.description"></div>
         </div>
-        <div class="video-container" v-else-if="item.youtubeEmbedUrl">
-          <div class="video-wrapper">
-            <iframe
-              width="560"
-              height="315"
-              :src="item.youtubeEmbedUrl"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
+        <VideoPlayer
+          v-else-if="item.youtubeEmbedUrl"
+          :url="item.youtubeEmbedUrl"
+        />
       </div>
     </div>
   </div>
@@ -40,6 +32,7 @@ import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
 import AudioPlayer from "@/components/AudioPlayer.vue";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 
 const MOBILE_BREAKPOINT = 600;
 const MAX_MOBILE_WIDTH = "90vw";
@@ -69,7 +62,7 @@ function getParameterByName(url, name) {
 
 export default {
   name: "FeedItemPage",
-  components: { AudioPlayer, FeedItemSkeleton },
+  components: { AudioPlayer, FeedItemSkeleton, VideoPlayer },
   data() {
     return {
       item: {},
@@ -167,31 +160,6 @@ export default {
 
 .description {
   padding: 3rem;
-}
-
-/* Tablet + Desktop */
-@media (min-width: 37.5em) {
-  .video-container {
-    width: 80%;
-    max-width: 1280px;
-    margin: 3rem auto;
-  }
-
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-  }
-
-  .video-wrapper iframe,
-  .video-wrapper embed,
-  .video-wrapper object {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
 }
 
 /* Mobile */
