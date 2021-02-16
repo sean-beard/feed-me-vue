@@ -191,9 +191,14 @@ export default {
 
 <style scoped>
 audio {
+  border: 3px solid darkgray;
   margin-bottom: 3rem;
   width: 75%;
   max-width: 1280px;
+}
+
+audio:focus {
+  border: 3px solid #1a237e;
 }
 
 .btn {
