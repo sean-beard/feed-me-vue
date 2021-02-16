@@ -17,7 +17,12 @@
             </button>
 
             <figure>
-              <audio ref="audioRef" controls :src="item.mediaUrl">
+              <audio
+                ref="audioRef"
+                controls
+                :src="item.mediaUrl"
+                :preload="auto"
+              >
                 Your browser does not support the
                 <code>audio</code> element.
               </audio>
