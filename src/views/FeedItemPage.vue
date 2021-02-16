@@ -11,38 +11,17 @@
 
       <div class="description" ref="description">
         <div v-if="!!item.description">
-          <div v-if="item.mediaType === 'audio/mpeg'">
-            <button class="btn" @click="handlePlaybackRateChange">
-              {{ playbackRate + "x" }}
-            </button>
-
-            <figure>
-              <audio
-                ref="audioRef"
-                controls
-                :src="item.mediaUrl"
-                preload="auto"
-              >
-                Your browser does not support the
-                <code>audio</code> element.
-              </audio>
-              <figcaption>{{ item.description }}</figcaption>
-            </figure>
-          </div>
+          <AudioPlayer
+            v-if="item.mediaType === 'audio/mpeg'"
+            :url="item.mediaUrl"
+            :description="item.description"
+          />
           <div v-else v-html="item.description"></div>
         </div>
-        <div class="video-container" v-else-if="item.youtubeEmbedUrl">
-          <div class="video-wrapper">
-            <iframe
-              width="560"
-              height="315"
-              :src="item.youtubeEmbedUrl"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
+        <VideoPlayer
+          v-else-if="item.youtubeEmbedUrl"
+          :url="item.youtubeEmbedUrl"
+        />
       </div>
     </div>
   </div>
@@ -51,7 +30,9 @@
 <script>
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
+import AudioPlayer from "@/components/AudioPlayer.vue";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
+import VideoPlayer from "@/components/VideoPlayer.vue";
 
 const MOBILE_BREAKPOINT = 600;
 const MAX_MOBILE_WIDTH = "90vw";
@@ -81,14 +62,13 @@ function getParameterByName(url, name) {
 
 export default {
   name: "FeedItemPage",
-  components: { FeedItemSkeleton },
+  components: { AudioPlayer, FeedItemSkeleton, VideoPlayer },
   data() {
     return {
       item: {},
       isLoading: false,
       error: "",
-      windowWidth: window.innerWidth,
-      playbackRate: 1
+      windowWidth: window.innerWidth
     };
   },
   computed: {
@@ -110,27 +90,6 @@ export default {
     },
     handleWindowResize() {
       this.windowWidth = window.innerWidth;
-    },
-    handlePlaybackRateChange() {
-      const audioElement = this.$refs.audioRef;
-
-      if (!audioElement) return;
-
-      switch (this.playbackRate) {
-        case 1:
-          this.playbackRate = 1.5;
-          break;
-        case 1.5:
-          this.playbackRate = 2;
-          break;
-        case 2:
-          this.playbackRate = 1;
-          break;
-        default:
-          this.playbackRate = 1;
-      }
-
-      audioElement.playbackRate = this.playbackRate;
     }
   },
   created() {
@@ -190,17 +149,6 @@ export default {
 </script>
 
 <style scoped>
-audio {
-  border: 3px solid darkgray;
-  margin-bottom: 3rem;
-  width: 75%;
-  max-width: 1280px;
-}
-
-audio:focus {
-  border: 3px solid #1a237e;
-}
-
 .btn {
   margin: 2rem 0 4rem 0;
   min-width: 100px;
@@ -212,37 +160,6 @@ audio:focus {
 
 .description {
   padding: 3rem;
-}
-
-/* Tablet + Desktop */
-@media (min-width: 37.5em) {
-  .video-container {
-    width: 80%;
-    max-width: 1280px;
-    margin: 3rem auto;
-  }
-
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-  }
-  .video-wrapper iframe,
-  .video-wrapper embed,
-  .video-wrapper object {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
-
-/* Tablet */
-@media (max-width: 48em) {
-  audio {
-    width: 100%;
-  }
 }
 
 /* Mobile */
