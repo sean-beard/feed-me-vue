@@ -21,7 +21,7 @@
                 ref="audioRef"
                 controls
                 :src="item.mediaUrl"
-                :preload="auto"
+                preload="auto"
               >
                 Your browser does not support the
                 <code>audio</code> element.
