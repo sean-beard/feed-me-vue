@@ -78,6 +78,7 @@ audio:focus {
 /* Tablet */
 @media (max-width: 48em) {
   audio {
+    border: none;
     width: 100%;
   }
 }
