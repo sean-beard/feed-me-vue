@@ -61,6 +61,7 @@ export default {
 <style scoped>
 audio {
   border: 3px solid darkgray;
+  background-color: darkgray;
   margin-bottom: 3rem;
   width: 75%;
   max-width: 1280px;
@@ -79,6 +80,7 @@ audio:focus {
 @media (max-width: 48em) {
   audio {
     border: none;
+    background-color: transparent;
     width: 100%;
   }
 }
