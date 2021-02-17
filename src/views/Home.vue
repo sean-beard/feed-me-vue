@@ -23,25 +23,10 @@
 
 <script>
 import { mapState } from "vuex";
-import { pipe, map, flatten, sort } from "ramda";
 import FeedSkeleton from "@/components/FeedSkeleton";
 import NewsFeed from "@/components/NewsFeed.vue";
 import PreLoginHome from "@/components/PreLoginHome";
 import { get } from "@/utils/api";
-
-const getFeedItemsFromFeed = ({ name, items }) =>
-  items.map(item => {
-    item.feedName = name;
-    item.pubDate = new Date(item.pubDate);
-    return item;
-  });
-
-const getFeedItems = feeds =>
-  pipe(
-    map(getFeedItemsFromFeed),
-    flatten,
-    sort((a, b) => b.pubDate - a.pubDate)
-  )(feeds || []);
 
 export default {
   name: "Home",
@@ -62,12 +47,12 @@ export default {
       this.loading = true;
 
       get("/feed")
-        .then(({ status, feeds }) => {
+        .then(({ status, feed }) => {
           if (status === 500) {
             this.error = "There was an error loading your feeds";
             return;
           }
-          this.feedItems = getFeedItems(feeds);
+          this.feedItems = feed;
         })
         .catch(() => {
           this.error = "There was an error loading your feeds";
