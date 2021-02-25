@@ -7,7 +7,7 @@
       </p>
       <div class="hero-footer">
         <h2>Start curating your newsfeed</h2>
-        <a class="btn" :href="`${apiBaseUrl}/auth/github`">
+        <a class="btn" :href="loginUrl">
           Login with Github
         </a>
       </div>
@@ -16,13 +16,11 @@
 </template>
 
 <script>
+import authMixin from "@/mixins/authMixin";
+
 export default {
   name: "PreLoginHome",
-  data() {
-    return {
-      apiBaseUrl: process.env.VUE_APP_BASE_API_URL
-    };
-  }
+  mixins: [authMixin]
 };
 </script>
 

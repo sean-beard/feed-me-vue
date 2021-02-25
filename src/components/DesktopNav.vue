@@ -18,18 +18,18 @@
       </button>
     </div>
 
-    <a v-if="!this.isAuthenticated" :href="`${apiBaseUrl}/auth/github`">
+    <a v-if="!this.isAuthenticated" :href="loginUrl">
       Login with Github
     </a>
   </nav>
 </template>
 
 <script>
-import navMixin from "@/mixins/navMixin";
+import authMixin from "@/mixins/authMixin";
 
 export default {
-  name: "Nav",
-  mixins: [navMixin]
+  name: "DesktopNav",
+  mixins: [authMixin]
 };
 </script>
 

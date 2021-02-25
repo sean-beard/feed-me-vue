@@ -30,45 +30,21 @@
 <script>
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
-import AudioPlayer from "@/components/AudioPlayer.vue";
-import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
-import VideoPlayer from "@/components/VideoPlayer.vue";
-
-const MOBILE_BREAKPOINT = 600;
-const MAX_MOBILE_WIDTH = "90vw";
-
-function addMaxWidth(el) {
-  el.style.maxWidth = MAX_MOBILE_WIDTH;
-
-  (el.childNodes || []).forEach(x => {
-    if (x.nodeType == 1) addMaxWidth(x);
-  });
-}
-
-function removeMaxWidth(el) {
-  if (el.style.maxWidth !== MAX_MOBILE_WIDTH) return;
-
-  el.style.maxWidth = "unset";
-
-  (el.childNodes || []).forEach(x => {
-    if (x.nodeType == 1) removeMaxWidth(x);
-  });
-}
-
-function getParameterByName(url, name) {
-  const match = RegExp("[?&]" + name + "=([^&]*)").exec(url);
-  return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-}
+import mobileHtmlMixin from "@/mixins/mobileHtmlMixin.vue";
+import { getParameterByName } from "@/utils/url";
+import AudioPlayer from "@/components/AudioPlayer";
+import FeedItemSkeleton from "@/components/FeedItemSkeleton";
+import VideoPlayer from "@/components/VideoPlayer";
 
 export default {
   name: "FeedItemPage",
+  mixins: [mobileHtmlMixin],
   components: { AudioPlayer, FeedItemSkeleton, VideoPlayer },
   data() {
     return {
       item: {},
       isLoading: false,
-      error: "",
-      windowWidth: window.innerWidth
+      error: ""
     };
   },
   computed: {
@@ -87,9 +63,6 @@ export default {
         .catch(() => {
           this.error = "There was an error updating the status of this item";
         });
-    },
-    handleWindowResize() {
-      this.windowWidth = window.innerWidth;
     }
   },
   created() {
@@ -119,31 +92,6 @@ export default {
       .finally(() => {
         this.isLoading = false;
       });
-
-    this.$nextTick(() => {
-      window.addEventListener("resize", this.handleWindowResize);
-    });
-
-    window.setTimeout(() => {
-      if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.description)
-        addMaxWidth(this.$refs.description);
-    }, 1000);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleWindowResize);
-  },
-  watch: {
-    windowWidth(newWidth, oldWidth) {
-      if (!this.$refs.description) return;
-
-      if (oldWidth > MOBILE_BREAKPOINT && newWidth < MOBILE_BREAKPOINT) {
-        addMaxWidth(this.$refs.description);
-      }
-
-      if (oldWidth < MOBILE_BREAKPOINT && newWidth > MOBILE_BREAKPOINT) {
-        removeMaxWidth(this.$refs.description);
-      }
-    }
   }
 };
 </script>

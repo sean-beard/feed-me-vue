@@ -55,7 +55,7 @@
 
 <script>
 import { put } from "@/utils/api";
-import FeedItemCard from "./FeedItemCard.vue";
+import FeedItemCard from "./FeedItemCard";
 
 export default {
   name: "NewsFeed",

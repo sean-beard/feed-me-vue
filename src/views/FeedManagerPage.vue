@@ -2,6 +2,8 @@
   <div>
     <section>
       <SubscriptionForm class="form" />
+    </section>
+    <section>
       <Subscriptions />
     </section>
   </div>
@@ -9,7 +11,7 @@
 
 <script>
 import SubscriptionForm from "@/components/SubscriptionForm";
-import Subscriptions from "@/components/Subscriptions.vue";
+import Subscriptions from "@/components/Subscriptions";
 
 export default {
   name: "FeedManagerPage",

@@ -24,7 +24,7 @@
 <script>
 import { mapState } from "vuex";
 import FeedSkeleton from "@/components/FeedSkeleton";
-import NewsFeed from "@/components/NewsFeed.vue";
+import NewsFeed from "@/components/NewsFeed";
 import PreLoginHome from "@/components/PreLoginHome";
 import { get } from "@/utils/api";
 
