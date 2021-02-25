@@ -39,7 +39,7 @@
       </template>
       <template v-if="!this.isAuthenticated">
         <li>
-          <a class="sidenav-close" :href="`${apiBaseUrl}/auth/github`">
+          <a class="sidenav-close" :href="loginUrl">
             Login to Github
           </a>
         </li>
@@ -50,11 +50,11 @@
 
 <script>
 import { mapState } from "vuex";
-import navMixin from "@/mixins/navMixin";
+import authMixin from "@/mixins/authMixin";
 
 export default {
   name: "MobileNav",
-  mixins: [navMixin],
+  mixins: [authMixin],
   mounted() {
     var sideNav = document.querySelector(".sidenav");
     window.M.Sidenav.init(sideNav);

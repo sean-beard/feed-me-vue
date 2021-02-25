@@ -5,7 +5,7 @@ import { get } from "@/utils/api";
 export default {
   data() {
     return {
-      apiBaseUrl: process.env.VUE_APP_BASE_API_URL
+      loginUrl: `${process.env.VUE_APP_BASE_API_URL}/auth/github`
     };
   },
   computed: {
