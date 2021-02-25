@@ -2,6 +2,8 @@
   <div>
     <section>
       <SubscriptionForm class="form" />
+    </section>
+    <section>
       <Subscriptions />
     </section>
   </div>
