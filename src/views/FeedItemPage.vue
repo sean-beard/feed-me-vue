@@ -30,23 +30,21 @@
 <script>
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
-import { addMaxWidth, removeMaxWidth } from "@/utils/ui";
+import mobileHtmlMixin from "@/mixins/mobileHtmlMixin.vue";
 import { getParameterByName } from "@/utils/url";
 import AudioPlayer from "@/components/AudioPlayer";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton";
 import VideoPlayer from "@/components/VideoPlayer";
 
-const MOBILE_BREAKPOINT = 600;
-
 export default {
   name: "FeedItemPage",
+  mixins: [mobileHtmlMixin],
   components: { AudioPlayer, FeedItemSkeleton, VideoPlayer },
   data() {
     return {
       item: {},
       isLoading: false,
-      error: "",
-      windowWidth: window.innerWidth
+      error: ""
     };
   },
   computed: {
@@ -65,9 +63,6 @@ export default {
         .catch(() => {
           this.error = "There was an error updating the status of this item";
         });
-    },
-    handleWindowResize() {
-      this.windowWidth = window.innerWidth;
     }
   },
   created() {
@@ -97,31 +92,6 @@ export default {
       .finally(() => {
         this.isLoading = false;
       });
-
-    this.$nextTick(() => {
-      window.addEventListener("resize", this.handleWindowResize);
-    });
-
-    window.setTimeout(() => {
-      if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.description)
-        addMaxWidth(this.$refs.description);
-    }, 1000);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleWindowResize);
-  },
-  watch: {
-    windowWidth(newWidth, oldWidth) {
-      if (!this.$refs.description) return;
-
-      if (oldWidth > MOBILE_BREAKPOINT && newWidth < MOBILE_BREAKPOINT) {
-        addMaxWidth(this.$refs.description);
-      }
-
-      if (oldWidth < MOBILE_BREAKPOINT && newWidth > MOBILE_BREAKPOINT) {
-        removeMaxWidth(this.$refs.description);
-      }
-    }
   }
 };
 </script>
