@@ -25,7 +25,7 @@
 
 <script>
 import { get, deletion } from "@/utils/api.js";
-import SubscriptionsSkeleton from "@/components/SubscriptionsSkeleton.vue";
+import SubscriptionsSkeleton from "@/components/SubscriptionsSkeleton";
 
 export default {
   name: "Subscriptions",

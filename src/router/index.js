@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import AuthCallback from "../views/AuthCallback.vue";
-import FeedItemPage from "../views/FeedItemPage.vue";
-import FeedManagerPage from "../views/FeedManagerPage.vue";
+import Home from "../views/Home";
+import AuthCallback from "../views/AuthCallback";
+import FeedItemPage from "../views/FeedItemPage";
+import FeedManagerPage from "../views/FeedManagerPage";
 
 Vue.use(VueRouter);
 

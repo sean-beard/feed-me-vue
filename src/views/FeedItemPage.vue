@@ -30,9 +30,9 @@
 <script>
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
-import AudioPlayer from "@/components/AudioPlayer.vue";
-import FeedItemSkeleton from "@/components/FeedItemSkeleton.vue";
-import VideoPlayer from "@/components/VideoPlayer.vue";
+import AudioPlayer from "@/components/AudioPlayer";
+import FeedItemSkeleton from "@/components/FeedItemSkeleton";
+import VideoPlayer from "@/components/VideoPlayer";
 
 const MOBILE_BREAKPOINT = 600;
 const MAX_MOBILE_WIDTH = "90vw";
