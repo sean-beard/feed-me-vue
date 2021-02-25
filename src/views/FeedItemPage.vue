@@ -30,30 +30,12 @@
 <script>
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
+import { addMaxWidth, removeMaxWidth } from "@/utils/ui";
 import AudioPlayer from "@/components/AudioPlayer";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton";
 import VideoPlayer from "@/components/VideoPlayer";
 
 const MOBILE_BREAKPOINT = 600;
-const MAX_MOBILE_WIDTH = "90vw";
-
-function addMaxWidth(el) {
-  el.style.maxWidth = MAX_MOBILE_WIDTH;
-
-  (el.childNodes || []).forEach(x => {
-    if (x.nodeType == 1) addMaxWidth(x);
-  });
-}
-
-function removeMaxWidth(el) {
-  if (el.style.maxWidth !== MAX_MOBILE_WIDTH) return;
-
-  el.style.maxWidth = "unset";
-
-  (el.childNodes || []).forEach(x => {
-    if (x.nodeType == 1) removeMaxWidth(x);
-  });
-}
 
 function getParameterByName(url, name) {
   const match = RegExp("[?&]" + name + "=([^&]*)").exec(url);
