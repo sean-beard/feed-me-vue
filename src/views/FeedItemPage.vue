@@ -31,16 +31,12 @@
 import { mapState } from "vuex";
 import { get, put } from "@/utils/api";
 import { addMaxWidth, removeMaxWidth } from "@/utils/ui";
+import { getParameterByName } from "@/utils/url";
 import AudioPlayer from "@/components/AudioPlayer";
 import FeedItemSkeleton from "@/components/FeedItemSkeleton";
 import VideoPlayer from "@/components/VideoPlayer";
 
 const MOBILE_BREAKPOINT = 600;
-
-function getParameterByName(url, name) {
-  const match = RegExp("[?&]" + name + "=([^&]*)").exec(url);
-  return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-}
 
 export default {
   name: "FeedItemPage",
