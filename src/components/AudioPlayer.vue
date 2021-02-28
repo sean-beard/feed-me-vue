@@ -9,7 +9,7 @@
         Your browser does not support the
         <code>audio</code> element.
       </audio>
-      <figcaption>{{ description }}</figcaption>
+      <figcaption v-html="description"></figcaption>
     </figure>
   </div>
 </template>
