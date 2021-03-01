@@ -1,9 +1,9 @@
 <template>
   <div class="mobile-nav">
     <nav class="indigo darken-4">
-      <a href="#" data-target="slide-out" class="sidenav-trigger"
-        ><i class="material-icons">menu</i></a
-      >
+      <a href="#" data-target="slide-out" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+      </a>
       <h1>
         <router-link :to="{ name: 'Home' }">FeedMe</router-link>
       </h1>
