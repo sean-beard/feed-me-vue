@@ -1,7 +1,17 @@
 <template>
   <div>
+    <button class="btn" @click="handleRewind">
+      <i class="material-icons">replay_10</i>
+      <span class="visually-hidden">Rewind 10 seconds</span>
+    </button>
+
     <button class="btn" @click="handlePlaybackRateChange">
       {{ playbackRate + "x" }}
+    </button>
+
+    <button class="btn" @click="handleFastForward">
+      <i class="material-icons">forward_30</i>
+      <span class="visually-hidden">Fast forward 30 seconds</span>
     </button>
 
     <figure>
@@ -9,7 +19,7 @@
         Your browser does not support the
         <code>audio</code> element.
       </audio>
-      <figcaption>{{ description }}</figcaption>
+      <figcaption v-html="description"></figcaption>
     </figure>
   </div>
 </template>
@@ -33,6 +43,16 @@ export default {
     };
   },
   methods: {
+    handleRewind() {
+      const audioElement = this.$refs.audioRef;
+      if (!audioElement) return;
+      audioElement.currentTime = audioElement.currentTime - 10;
+    },
+    handleFastForward() {
+      const audioElement = this.$refs.audioRef;
+      if (!audioElement) return;
+      audioElement.currentTime = audioElement.currentTime + 30;
+    },
     handlePlaybackRateChange() {
       const audioElement = this.$refs.audioRef;
 
@@ -59,6 +79,10 @@ export default {
 </script>
 
 <style scoped>
+i {
+  font-size: 2.5em;
+}
+
 audio {
   border: 3px solid darkgray;
   background-color: darkgray;
@@ -74,6 +98,10 @@ audio:focus {
 .btn {
   margin: 2rem 0 4rem 0;
   min-width: 100px;
+}
+
+.btn + .btn {
+  margin-left: 0.5rem;
 }
 
 /* Tablet */
