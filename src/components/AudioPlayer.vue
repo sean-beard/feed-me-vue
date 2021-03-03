@@ -15,25 +15,23 @@
     </button>
 
     <figure>
-      <audio ref="audioRef" controls :src="url" preload="auto">
+      <audio ref="audioRef" controls :src="item.mediaUrl" preload="auto">
         Your browser does not support the
         <code>audio</code> element.
       </audio>
-      <figcaption v-html="description"></figcaption>
+      <figcaption v-html="item.description"></figcaption>
     </figure>
   </div>
 </template>
 
 <script>
+import { put } from "@/utils/api.js";
+
 export default {
   name: "AudioPlayer",
   props: {
-    url: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
+    item: {
+      type: Object,
       required: true
     }
   },
@@ -43,6 +41,16 @@ export default {
     };
   },
   methods: {
+    postCurrentTime() {
+      const audioElement = this.$refs.audioRef;
+      if (!audioElement) return;
+
+      const item = { ...this.item, currentTime: audioElement.currentTime };
+
+      put("/item", { items: [item] }).catch(() => {
+        console.log("Error saving current playback time...");
+      });
+    },
     handleRewind() {
       const audioElement = this.$refs.audioRef;
       if (!audioElement) return;
@@ -55,7 +63,6 @@ export default {
     },
     handlePlaybackRateChange() {
       const audioElement = this.$refs.audioRef;
-
       if (!audioElement) return;
 
       switch (this.playbackRate) {
@@ -74,6 +81,20 @@ export default {
 
       audioElement.playbackRate = this.playbackRate;
     }
+  },
+  mounted() {
+    const audioElement = this.$refs.audioRef;
+    if (!audioElement) return;
+
+    if (this.item.currentTime) audioElement.currentTime = this.item.currentTime;
+
+    audioElement.addEventListener("pause", this.postCurrentTime);
+  },
+  beforeDestroy() {
+    const audioElement = this.$refs.audioRef;
+    if (!audioElement) return;
+
+    audioElement.removeEventListener("pause", this.postCurrentTime);
   }
 };
 </script>

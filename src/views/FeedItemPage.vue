@@ -11,11 +11,7 @@
 
       <div class="description" ref="description">
         <div v-if="!!item.description">
-          <AudioPlayer
-            v-if="item.mediaType === 'audio/mpeg'"
-            :url="item.mediaUrl"
-            :description="item.description"
-          />
+          <AudioPlayer v-if="item.mediaType === 'audio/mpeg'" :item="item" />
           <div v-else v-html="item.description"></div>
         </div>
         <VideoPlayer
