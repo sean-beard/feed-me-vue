@@ -95,6 +95,7 @@ export default {
           return;
         }
 
+        // TODO: don't mutate prop
         this.items = this.items.map(item => {
           if (this.checkedItemIds.indexOf(item.id) < 0) {
             return item;
