@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div v-if="filteredItems.length !== items.length">
+      <div v-if="unreadItems.length !== items.length">
         <label class="desktop-filter">
           <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
           <span>Filter by unread</span>
@@ -73,11 +73,11 @@ export default {
     };
   },
   computed: {
-    filteredItems() {
+    unreadItems() {
       return this.items.filter(item => !item.isRead);
     },
     renderedItems() {
-      return this.shouldFilterUnread ? this.filteredItems : this.items;
+      return this.shouldFilterUnread ? this.unreadItems : this.items;
     }
   },
   methods: {
