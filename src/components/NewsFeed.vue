@@ -5,7 +5,17 @@
         <label for="search">Search</label>
         <input id="search" type="search" v-model="searchTerm" />
       </div>
+      <button
+        v-if="searchTerm"
+        class="clear-search-btn"
+        type="button"
+        @click.prevent="searchTerm = ''"
+      >
+        <span class="visually-hidden">Clear search text</span>
+        <i class="material-icons">close</i>
+      </button>
     </form>
+
     <div class="controls">
       <div class="status-controls">
         <label v-if="renderedItems.length">
@@ -145,12 +155,27 @@ form {
   justify-content: center;
 }
 
+label,
+input[type="search"] {
+  padding-left: 0.5rem;
+}
+
 input[type="search"] {
   width: 350px;
 }
 
 button + button {
   margin-left: 1rem;
+}
+
+.clear-search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  margin-top: 1.5rem;
+  margin-left: -2rem;
+  z-index: 10;
 }
 
 .controls,
