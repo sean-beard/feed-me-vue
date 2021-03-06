@@ -6,6 +6,7 @@
         <input id="search" type="search" v-model="searchTerm" />
       </div>
     </form>
+
     <div class="controls">
       <div class="status-controls">
         <label v-if="renderedItems.length">
@@ -143,6 +144,11 @@ export default {
 form {
   display: flex;
   justify-content: center;
+}
+
+label,
+input[type="search"] {
+  padding-left: 0.5rem;
 }
 
 input[type="search"] {
