@@ -1,5 +1,11 @@
 <template>
   <div>
+    <form>
+      <div class="input-field">
+        <label for="search">Search</label>
+        <input id="search" type="search" v-model="searchTerm" />
+      </div>
+    </form>
     <div class="controls">
       <div class="status-controls">
         <label v-if="renderedItems.length">
@@ -17,7 +23,7 @@
         </div>
       </div>
 
-      <div v-if="filteredItems.length !== items.length">
+      <div v-if="unreadItems.length !== items.length">
         <label class="desktop-filter">
           <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
           <span>Filter by unread</span>
@@ -48,7 +54,7 @@
     </div>
 
     <h2 v-if="!renderedItems.length">
-      Woohoo! You're all caught up!
+      Nothing to see here!
     </h2>
   </div>
 </template>
@@ -69,15 +75,26 @@ export default {
     return {
       areAllChecked: false,
       checkedItemIds: [],
+      searchTerm: "",
       shouldFilterUnread: false
     };
   },
   computed: {
-    filteredItems() {
+    unreadItems() {
       return this.items.filter(item => !item.isRead);
     },
     renderedItems() {
-      return this.shouldFilterUnread ? this.filteredItems : this.items;
+      const items = this.shouldFilterUnread ? this.unreadItems : this.items;
+
+      if (!this.searchTerm) return items;
+
+      const searchTerm = this.searchTerm.toLowerCase();
+
+      return items.filter(
+        item =>
+          item.title.toLowerCase().indexOf(searchTerm) > -1 ||
+          (item.description || "").toLowerCase().indexOf(searchTerm) > -1
+      );
     }
   },
   methods: {
@@ -123,6 +140,15 @@ export default {
 </script>
 
 <style scoped>
+form {
+  display: flex;
+  justify-content: center;
+}
+
+input[type="search"] {
+  width: 350px;
+}
+
 button + button {
   margin-left: 1rem;
 }
