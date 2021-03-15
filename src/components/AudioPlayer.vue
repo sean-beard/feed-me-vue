@@ -15,7 +15,14 @@
     </button>
 
     <figure>
-      <audio ref="audioRef" controls :src="item.mediaUrl" preload="auto">
+      <audio
+        ref="audioRef"
+        controls
+        :src="item.mediaUrl"
+        preload="auto"
+        @canplay="setCurrentTime"
+        @pause="postCurrentTime"
+      >
         Your browser does not support the
         <code>audio</code> element.
       </audio>
@@ -51,6 +58,11 @@ export default {
         console.log("Error saving current playback time...");
       });
     },
+    setCurrentTime() {
+      const audioElement = this.$refs.audioRef;
+      if (!audioElement || !this.item.currentTime) return;
+      audioElement.currentTime = this.item.currentTime;
+    },
     handleRewind() {
       const audioElement = this.$refs.audioRef;
       if (!audioElement) return;
@@ -82,18 +94,11 @@ export default {
       audioElement.playbackRate = this.playbackRate;
     }
   },
-  mounted() {
-    const audioElement = this.$refs.audioRef;
-    if (!audioElement) return;
-
-    if (this.item.currentTime) audioElement.currentTime = this.item.currentTime;
-
-    audioElement.addEventListener("pause", this.postCurrentTime);
-  },
   beforeDestroy() {
     const audioElement = this.$refs.audioRef;
     if (!audioElement) return;
 
+    audioElement.removeEventListener("canplay", this.postCurrentTime);
     audioElement.removeEventListener("pause", this.postCurrentTime);
   }
 };
