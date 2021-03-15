@@ -25,7 +25,6 @@ export default {
     });
 
     window.setTimeout(() => {
-      console.log(this.$refs.description);
       if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.description)
         addMaxWidth(this.$refs.description);
     }, 1000);
