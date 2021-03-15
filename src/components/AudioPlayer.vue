@@ -21,6 +21,7 @@
         :src="item.mediaUrl"
         preload="auto"
         @canplay="setCurrentTime"
+        @pause="postCurrentTime"
       >
         Your browser does not support the
         <code>audio</code> element.
@@ -92,12 +93,6 @@ export default {
 
       audioElement.playbackRate = this.playbackRate;
     }
-  },
-  mounted() {
-    const audioElement = this.$refs.audioRef;
-    if (!audioElement) return;
-
-    audioElement.addEventListener("pause", this.postCurrentTime);
   },
   beforeDestroy() {
     const audioElement = this.$refs.audioRef;
