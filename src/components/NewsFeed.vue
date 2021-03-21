@@ -26,10 +26,18 @@
         </label>
 
         <div class="btn-wrapper" v-if="checkedItemIds.length">
-          <button class="btn" @click="handleMarkAll('read')">
+          <button
+            class="btn"
+            :disabled="isLoading"
+            @click="handleMarkAll('read')"
+          >
             Mark as Read
           </button>
-          <button class="btn" @click="handleMarkAll('unread')">
+          <button
+            class="btn"
+            :disabled="isLoading"
+            @click="handleMarkAll('unread')"
+          >
             Mark as Unread
           </button>
         </div>
@@ -88,7 +96,8 @@ export default {
       areAllChecked: false,
       checkedItemIds: [],
       searchTerm: "",
-      shouldFilterUnread: false
+      shouldFilterUnread: false,
+      isLoading: false
     };
   },
   computed: {
@@ -117,28 +126,34 @@ export default {
         isRead: newIsReadStatus
       }));
 
-      // TODO: catch/handle error
-      put("/item", { items: payload }).then(({ status }) => {
-        if (status !== 200) {
-          // TODO: catch/handle error
-          return;
-        }
+      this.isLoading = true;
 
-        // TODO: don't mutate prop
-        this.items = this.items.map(item => {
-          if (this.checkedItemIds.indexOf(item.id) < 0) {
-            return item;
+      // TODO: catch/handle error
+      put("/item", { items: payload })
+        .then(({ status }) => {
+          if (status !== 200) {
+            // TODO: catch/handle error
+            return;
           }
 
-          return {
-            ...item,
-            isRead: newIsReadStatus
-          };
-        });
+          // TODO: don't mutate prop
+          this.items = this.items.map(item => {
+            if (this.checkedItemIds.indexOf(item.id) < 0) {
+              return item;
+            }
 
-        this.areAllChecked = false;
-        this.checkedItemIds = [];
-      });
+            return {
+              ...item,
+              isRead: newIsReadStatus
+            };
+          });
+
+          this.areAllChecked = false;
+          this.checkedItemIds = [];
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     }
   },
   watch: {
