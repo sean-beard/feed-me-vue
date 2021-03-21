@@ -49,13 +49,13 @@ export default {
       get("/feed")
         .then(({ status, feed }) => {
           if (status === 500) {
-            this.error = "There was an error loading your feeds";
+            this.error = "There was an error loading your feed";
             return;
           }
           this.feedItems = feed;
         })
         .catch(() => {
-          this.error = "There was an error loading your feeds";
+          this.error = "There was an error loading your feed";
         })
         .finally(() => {
           this.loading = false;
