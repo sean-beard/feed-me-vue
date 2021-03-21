@@ -2,7 +2,9 @@
   <div>
     <form>
       <div class="input-field">
-        <label for="search">Search</label>
+        <label for="search">{{
+          `Search ${shouldFilterUnread ? "unread" : "all"}`
+        }}</label>
         <input id="search" type="search" v-model="searchTerm" />
       </div>
       <button
