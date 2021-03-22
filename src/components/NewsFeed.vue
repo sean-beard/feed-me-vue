@@ -172,7 +172,7 @@ form {
   justify-content: center;
 }
 
-label,
+label[for="search"],
 input[type="search"] {
   padding-left: 0.5rem;
 }
