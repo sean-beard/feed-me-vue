@@ -8,6 +8,14 @@ import { addMaxWidth, removeMaxWidth } from "@/utils/ui";
 
 const MOBILE_BREAKPOINT = 600;
 
+const styleCodeSnippets = isMobileScreen => {
+  document.querySelectorAll("pre").forEach(el => {
+    el.style.textAlign = "left";
+    el.style.width = isMobileScreen ? "300px" : "450px";
+    el.style.margin = isMobileScreen ? "0" : "0 auto";
+  });
+};
+
 export default {
   data() {
     return {
@@ -25,8 +33,13 @@ export default {
     });
 
     window.setTimeout(() => {
-      if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.description)
-        addMaxWidth(this.$refs.description);
+      const isMobileScreen = this.windowWidth < MOBILE_BREAKPOINT;
+
+      if (this.$refs.description) {
+        styleCodeSnippets(isMobileScreen);
+
+        if (isMobileScreen) addMaxWidth(this.$refs.description);
+      }
     }, 1000);
   },
   beforeDestroy() {
@@ -36,11 +49,16 @@ export default {
     windowWidth(newWidth, oldWidth) {
       if (!this.$refs.description) return;
 
-      if (oldWidth > MOBILE_BREAKPOINT && newWidth < MOBILE_BREAKPOINT) {
+      const wasMobileScreen = oldWidth < MOBILE_BREAKPOINT;
+      const isMobileScreen = newWidth < MOBILE_BREAKPOINT;
+
+      if (!wasMobileScreen && isMobileScreen) {
+        styleCodeSnippets(isMobileScreen);
         addMaxWidth(this.$refs.description);
       }
 
-      if (oldWidth < MOBILE_BREAKPOINT && newWidth > MOBILE_BREAKPOINT) {
+      if (wasMobileScreen && !isMobileScreen) {
+        styleCodeSnippets(isMobileScreen);
         removeMaxWidth(this.$refs.description);
       }
     }

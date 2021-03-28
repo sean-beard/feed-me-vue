@@ -106,6 +106,12 @@ export default {
   padding: 3rem;
 }
 
+pre {
+  text-align: left;
+  width: 450px;
+  margin: 0 auto;
+}
+
 /* Mobile */
 @media (max-width: 37.5em) {
   .description {
