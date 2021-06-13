@@ -86,10 +86,10 @@ import FeedItemCard from "./FeedItemCard";
 export default {
   name: "NewsFeed",
   components: {
-    FeedItemCard
+    FeedItemCard,
   },
   props: {
-    items: Array
+    items: Array,
   },
   data() {
     return {
@@ -97,12 +97,12 @@ export default {
       checkedItemIds: [],
       searchTerm: "",
       shouldFilterUnread: false,
-      isLoading: false
+      isLoading: false,
     };
   },
   computed: {
     unreadItems() {
-      return this.items.filter(item => !item.isRead);
+      return this.items.filter((item) => !item.isRead);
     },
     renderedItems() {
       const items = this.shouldFilterUnread ? this.unreadItems : this.items;
@@ -112,18 +112,19 @@ export default {
       const searchTerm = this.searchTerm.toLowerCase();
 
       return items.filter(
-        item =>
+        (item) =>
           item.title.toLowerCase().indexOf(searchTerm) > -1 ||
+          item.feedName.toLowerCase().indexOf(searchTerm) > -1 ||
           (item.description || "").toLowerCase().indexOf(searchTerm) > -1
       );
-    }
+    },
   },
   methods: {
     handleMarkAll(status) {
       const newIsReadStatus = status === "read";
-      const payload = this.checkedItemIds.map(id => ({
+      const payload = this.checkedItemIds.map((id) => ({
         id: id,
-        isRead: newIsReadStatus
+        isRead: newIsReadStatus,
       }));
 
       this.isLoading = true;
@@ -137,14 +138,14 @@ export default {
           }
 
           // TODO: don't mutate prop
-          this.items = this.items.map(item => {
+          this.items = this.items.map((item) => {
             if (this.checkedItemIds.indexOf(item.id) < 0) {
               return item;
             }
 
             return {
               ...item,
-              isRead: newIsReadStatus
+              isRead: newIsReadStatus,
             };
           });
 
@@ -154,15 +155,15 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-    }
+    },
   },
   watch: {
     areAllChecked(selectEverything) {
       this.checkedItemIds = selectEverything
-        ? this.renderedItems.map(item => item.id)
+        ? this.renderedItems.map((item) => item.id)
         : [];
-    }
-  }
+    },
+  },
 };
 </script>
 
