@@ -19,6 +19,10 @@
           :url="item.youtubeEmbedUrl"
         />
       </div>
+
+      <a v-if="item.url" :href="item.url" target="_blank" ref="noopener">
+        {{ item.url }}
+      </a>
     </div>
   </div>
 </template>
@@ -40,18 +44,18 @@ export default {
     return {
       item: {},
       isLoading: false,
-      error: ""
+      error: "",
     };
   },
   computed: {
-    ...mapState(["isAuthenticated", "authToken"])
+    ...mapState(["isAuthenticated", "authToken"]),
   },
   methods: {
     toggleReadStatus() {
       const newIsReadStatus = !this.item.isRead;
 
       put("/item", {
-        items: [{ id: this.item.id, isRead: newIsReadStatus }]
+        items: [{ id: this.item.id, isRead: newIsReadStatus }],
       })
         .then(() => {
           this.item.isRead = newIsReadStatus;
@@ -59,7 +63,7 @@ export default {
         .catch(() => {
           this.error = "There was an error updating the status of this item";
         });
-    }
+    },
   },
   created() {
     if (!this.isAuthenticated) {
@@ -88,7 +92,7 @@ export default {
       .finally(() => {
         this.isLoading = false;
       });
-  }
+  },
 };
 </script>
 
