@@ -10,7 +10,7 @@
       :key="sub.id"
     >
       <li class="row">
-        <p>{{ sub.feedName }}</p>
+        <p class="feed">{{ sub.feedName }}</p>
 
         <div class="btn-wrapper">
           <button class="btn" @click="handleUnsubscribe(sub.id)">
@@ -34,7 +34,7 @@ export default {
     return {
       subscriptions: [],
       isLoading: false,
-      error: ""
+      error: "",
     };
   },
   methods: {
@@ -55,11 +55,11 @@ export default {
         });
     },
     handleUnsubscribe(subscriptionId) {
-      deletion("/subscription", { subscriptionId }).then(data => {
+      deletion("/subscription", { subscriptionId }).then((data) => {
         if (data.status === 200) {
           let updatedSubscriptions = [];
 
-          this.subscriptions.forEach(sub => {
+          this.subscriptions.forEach((sub) => {
             if (sub.id === subscriptionId) {
               return;
             }
@@ -70,7 +70,7 @@ export default {
           this.subscriptions = updatedSubscriptions;
         }
       });
-    }
+    },
   },
   created() {
     this.fetchSubscriptions();
@@ -78,7 +78,7 @@ export default {
   },
   beforeDestroy() {
     this.eventHub.$off("subscribe", this.fetchSubscriptions);
-  }
+  },
 };
 </script>
 
@@ -94,6 +94,11 @@ p {
   margin: 1rem auto;
   max-width: 400px;
   width: 100%;
+}
+
+.feed {
+  text-align: left;
+  margin-right: 1rem;
 }
 
 .btn-wrapper {
