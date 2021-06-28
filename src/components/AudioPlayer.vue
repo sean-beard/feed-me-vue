@@ -39,12 +39,12 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      playbackRate: 1
+      playbackRate: 1,
     };
   },
   methods: {
@@ -61,7 +61,7 @@ export default {
     setCurrentTime() {
       const audioElement = this.$refs.audioRef;
       if (!audioElement || !this.item.currentTime) return;
-      audioElement.currentTime = this.item.currentTime;
+      audioElement.currentTime = Math.floor(this.item.currentTime);
     },
     handleRewind() {
       const audioElement = this.$refs.audioRef;
@@ -92,7 +92,7 @@ export default {
       }
 
       audioElement.playbackRate = this.playbackRate;
-    }
+    },
   },
   beforeDestroy() {
     const audioElement = this.$refs.audioRef;
@@ -100,7 +100,7 @@ export default {
 
     audioElement.removeEventListener("canplay", this.postCurrentTime);
     audioElement.removeEventListener("pause", this.postCurrentTime);
-  }
+  },
 };
 </script>
 
