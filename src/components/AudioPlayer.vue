@@ -61,7 +61,7 @@ export default {
     setCurrentTime() {
       const audioElement = this.$refs.audioRef;
       if (!audioElement || !this.item.currentTime) return;
-      audioElement.currentTime = Math.floor(this.item.currentTime);
+      audioElement.currentTime = Math.floor(this.item.currentTime).toFixed(1);
     },
     handleRewind() {
       const audioElement = this.$refs.audioRef;
