@@ -34,7 +34,7 @@ export default {
     return {
       subscriptions: [],
       isLoading: false,
-      error: "",
+      error: ""
     };
   },
   methods: {
@@ -55,11 +55,11 @@ export default {
         });
     },
     handleUnsubscribe(subscriptionId) {
-      deletion("/subscription", { subscriptionId }).then((data) => {
+      deletion("/subscription", { subscriptionId }).then(data => {
         if (data.status === 200) {
           let updatedSubscriptions = [];
 
-          this.subscriptions.forEach((sub) => {
+          this.subscriptions.forEach(sub => {
             if (sub.id === subscriptionId) {
               return;
             }
@@ -70,7 +70,7 @@ export default {
           this.subscriptions = updatedSubscriptions;
         }
       });
-    },
+    }
   },
   created() {
     this.fetchSubscriptions();
@@ -78,7 +78,7 @@ export default {
   },
   beforeDestroy() {
     this.eventHub.$off("subscribe", this.fetchSubscriptions);
-  },
+  }
 };
 </script>
 
