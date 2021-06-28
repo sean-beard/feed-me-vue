@@ -20,7 +20,7 @@
         controls
         :src="item.mediaUrl"
         preload="auto"
-        @canplay="setCurrentTime"
+        @loadeddata="setCurrentTime"
         @pause="postCurrentTime"
       >
         Your browser does not support the
