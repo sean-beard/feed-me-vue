@@ -1,26 +1,32 @@
 <template>
   <div class="video-container">
     <div class="video-wrapper">
-      <iframe
-        width="560"
-        height="315"
-        :src="url"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+      <div id="player"></div>
     </div>
   </div>
 </template>
 
 <script>
+import YouTubeIframeLoader from "youtube-iframe";
+
 export default {
   name: "VideoPlayer",
   props: {
-    url: {
+    videoId: {
       type: String,
       required: true,
     },
+  },
+  mounted() {
+    const videoId = this.videoId;
+
+    YouTubeIframeLoader.load(function(YT) {
+      new YT.Player("player", {
+        height: "315",
+        width: "560",
+        videoId,
+      });
+    });
   },
 };
 </script>

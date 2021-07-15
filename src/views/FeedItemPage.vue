@@ -15,8 +15,8 @@
           <div v-else v-html="item.description"></div>
         </div>
         <VideoPlayer
-          v-else-if="item.youtubeEmbedUrl"
-          :url="item.youtubeEmbedUrl"
+          v-else-if="item.youtubeVideoId"
+          :videoId="item.youtubeVideoId"
         />
       </div>
 
@@ -82,9 +82,7 @@ export default {
         }
 
         if (item.url && item.url.indexOf("youtube.com")) {
-          const embedUrlBase = "https://www.youtube.com/embed";
-          const videoId = getParameterByName(item.url, "v");
-          item.youtubeEmbedUrl = `${embedUrlBase}/${videoId}`;
+          item.youtubeVideoId = getParameterByName(item.url, "v");
         }
 
         this.item = item;
