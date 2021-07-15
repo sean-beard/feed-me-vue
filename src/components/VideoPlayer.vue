@@ -19,9 +19,9 @@ export default {
   props: {
     url: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
