@@ -1,31 +1,71 @@
 <template>
-  <div class="video-container">
-    <div class="video-wrapper">
-      <iframe
-        width="560"
-        height="315"
-        :src="url"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
+  <div>
+    <button class="btn" @click="handlePlaybackRateChange" type="button">
+      {{ playbackRate + "x" }}
+    </button>
+
+    <div class="video-container">
+      <div class="video-wrapper">
+        <div id="player"></div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import YouTubeIframeLoader from "youtube-iframe";
+
 export default {
   name: "VideoPlayer",
   props: {
-    url: {
+    videoId: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
+  data() {
+    return { player: null, playbackRate: 1 };
+  },
+  methods: {
+    loadPlayer(YT) {
+      const videoId = this.videoId;
+
+      this.player = new YT.Player("player", {
+        height: "315",
+        width: "560",
+        videoId,
+      });
+    },
+    handlePlaybackRateChange() {
+      switch (this.playbackRate) {
+        case 1:
+          this.playbackRate = 1.5;
+          break;
+        case 1.5:
+          this.playbackRate = 2;
+          break;
+        case 2:
+          this.playbackRate = 1;
+          break;
+        default:
+          this.playbackRate = 1;
+      }
+
+      this.player && this.player.setPlaybackRate(this.playbackRate);
+    },
+  },
+  mounted() {
+    YouTubeIframeLoader.load(this.loadPlayer);
+  },
 };
 </script>
 
 <style scoped>
+.btn {
+  margin-bottom: 1rem;
+  min-width: 100px;
+}
+
 /* Tablet + Desktop */
 @media (min-width: 37.5em) {
   .video-container {
