@@ -22,16 +22,17 @@
             `Search ${shouldFilterUnread ? "unread" : "all"}`
           }}</label>
           <input id="search" type="search" v-model="searchTerm" />
+
+          <button
+            v-if="searchTerm"
+            class="clear-search-btn"
+            type="button"
+            @click.prevent="searchTerm = ''"
+          >
+            <span class="visually-hidden">Clear search text</span>
+            <i class="material-icons">close</i>
+          </button>
         </div>
-        <button
-          v-if="searchTerm"
-          class="clear-search-btn"
-          type="button"
-          @click.prevent="searchTerm = ''"
-        >
-          <span class="visually-hidden">Clear search text</span>
-          <i class="material-icons">close</i>
-        </button>
       </div>
     </form>
 
@@ -250,8 +251,8 @@ button + button {
   border: none;
   cursor: pointer;
   height: 40px;
-  margin-top: 1.5rem;
-  margin-left: -2rem;
+  margin-top: 0.25rem;
+  margin-left: -2.5rem;
   z-index: 10;
 }
 
@@ -280,6 +281,10 @@ button + button {
   display: flex;
   align-items: center;
   flex: 1;
+}
+
+.input-field {
+  display: flex;
 }
 
 .full {
