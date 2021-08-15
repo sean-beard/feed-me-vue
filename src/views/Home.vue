@@ -5,7 +5,7 @@
 
     <div v-if="this.isAuthenticated">
       <section>
-        <NewsFeed v-if="feedItems.length" :items="feedItems" />
+        <NewsFeed :items="feedItems" />
 
         <h2 v-if="!feedItems.length && !error && !loading">
           Nothing to see here... Head over to

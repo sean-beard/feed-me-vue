@@ -1,21 +1,38 @@
 <template>
   <div>
     <form>
-      <div class="input-field">
-        <label for="search">{{
-          `Search ${shouldFilterUnread ? "unread" : "all"}`
-        }}</label>
-        <input id="search" type="search" v-model="searchTerm" />
+      <div>
+        <div class="toggles">
+          <label>
+            <input type="checkbox" :value="true" v-model="showArticles" />
+            <span>Articles</span>
+          </label>
+          <label>
+            <input type="checkbox" :value="true" v-model="showPodcasts" />
+            <span>Podcasts</span>
+          </label>
+          <label>
+            <input type="checkbox" :value="true" v-model="showYouTubeVideos" />
+            <span>YouTube</span>
+          </label>
+        </div>
+
+        <div class="input-field">
+          <label for="search">{{
+            `Search ${shouldFilterUnread ? "unread" : "all"}`
+          }}</label>
+          <input id="search" type="search" v-model="searchTerm" />
+        </div>
+        <button
+          v-if="searchTerm"
+          class="clear-search-btn"
+          type="button"
+          @click.prevent="searchTerm = ''"
+        >
+          <span class="visually-hidden">Clear search text</span>
+          <i class="material-icons">close</i>
+        </button>
       </div>
-      <button
-        v-if="searchTerm"
-        class="clear-search-btn"
-        type="button"
-        @click.prevent="searchTerm = ''"
-      >
-        <span class="visually-hidden">Clear search text</span>
-        <i class="material-icons">close</i>
-      </button>
     </form>
 
     <div class="controls">
@@ -98,6 +115,9 @@ export default {
       searchTerm: "",
       shouldFilterUnread: false,
       isLoading: false,
+      showArticles: true,
+      showPodcasts: true,
+      showYouTubeVideos: true,
     };
   },
   computed: {
@@ -107,6 +127,13 @@ export default {
     renderedItems() {
       const items = this.shouldFilterUnread ? this.unreadItems : this.items;
 
+      const searchedItems = this.getSearchedItems(items);
+
+      return this.getFilteredItems(searchedItems);
+    },
+  },
+  methods: {
+    getSearchedItems(items) {
       if (!this.searchTerm) return items;
 
       const searchTerm = this.searchTerm.toLowerCase();
@@ -118,8 +145,40 @@ export default {
           (item.description || "").toLowerCase().indexOf(searchTerm) > -1,
       );
     },
-  },
-  methods: {
+    getFilteredItems(items) {
+      let filteredItems = items;
+
+      if (!this.showArticles) {
+        filteredItems = filteredItems.filter(item => {
+          if (
+            item.mediaType === "audio/mpeg" ||
+            item.url.indexOf("youtube.com") > 0
+          ) {
+            return true;
+          }
+
+          return false;
+        });
+      }
+
+      if (!this.showPodcasts) {
+        filteredItems = filteredItems.filter(
+          item => item.mediaType !== "audio/mpeg",
+        );
+      }
+
+      if (!this.showYouTubeVideos) {
+        filteredItems = filteredItems.filter(item => {
+          if (!item.url) {
+            return true;
+          }
+
+          return item.url.indexOf("youtube.com") < 0;
+        });
+      }
+
+      return filteredItems;
+    },
     handleMarkAll(status) {
       const newIsReadStatus = status === "read";
       const payload = this.checkedItemIds.map(id => ({
@@ -194,6 +253,12 @@ button + button {
   margin-top: 1.5rem;
   margin-left: -2rem;
   z-index: 10;
+}
+
+.toggles {
+  display: flex;
+  margin-bottom: 2rem;
+  justify-content: space-between;
 }
 
 .controls,
