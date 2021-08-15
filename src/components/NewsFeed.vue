@@ -61,26 +61,24 @@
         </div>
       </div>
 
-      <div v-if="unreadItems.length !== items.length">
-        <label class="desktop-filter">
-          <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
-          <span>Filter by unread</span>
-        </label>
+      <label class="desktop-filter">
+        <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
+        <span>Filter by unread</span>
+      </label>
 
-        <label
-          class="btn mobile-filter"
-          :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
-        >
-          <input
-            type="checkbox"
-            class="visually-hidden"
-            :value="true"
-            v-model="shouldFilterUnread"
-          />
-          <span class="visually-hidden">Filter by unread</span>
-          <i class="material-icons">filter_list</i>
-        </label>
-      </div>
+      <label
+        class="btn mobile-filter"
+        :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
+      >
+        <input
+          type="checkbox"
+          class="visually-hidden"
+          :value="true"
+          v-model="shouldFilterUnread"
+        />
+        <span class="visually-hidden">Filter by unread</span>
+        <i class="material-icons">filter_list</i>
+      </label>
     </div>
 
     <div class="feed-row" v-for="item in renderedItems" :key="item.id">
@@ -114,7 +112,7 @@ export default {
       areAllChecked: false,
       checkedItemIds: [],
       searchTerm: "",
-      shouldFilterUnread: false,
+      shouldFilterUnread: true,
       isLoading: false,
       showArticles: true,
       showPodcasts: true,
