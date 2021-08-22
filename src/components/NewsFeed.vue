@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form v-if="!isLoading">
+    <form>
       <div>
         <div class="toggles">
           <label>
