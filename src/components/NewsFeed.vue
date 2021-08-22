@@ -99,6 +99,8 @@
 import { put } from "@/utils/api";
 import FeedItemCard from "./FeedItemCard";
 
+const getBooleanFromQueryString = param => (param ? param === "true" : true);
+
 export default {
   name: "NewsFeed",
   components: {
@@ -108,15 +110,23 @@ export default {
     items: Array,
   },
   data() {
+    const {
+      searchTerm,
+      shouldFilterUnread,
+      showArticles,
+      showPodcasts,
+      showYouTubeVideos,
+    } = this.$route.query;
+
     return {
       areAllChecked: false,
       checkedItemIds: [],
-      searchTerm: "",
-      shouldFilterUnread: true,
+      searchTerm: searchTerm || "",
+      shouldFilterUnread: getBooleanFromQueryString(shouldFilterUnread),
       isLoading: false,
-      showArticles: true,
-      showPodcasts: true,
-      showYouTubeVideos: true,
+      showArticles: getBooleanFromQueryString(showArticles),
+      showPodcasts: getBooleanFromQueryString(showPodcasts),
+      showYouTubeVideos: getBooleanFromQueryString(showYouTubeVideos),
     };
   },
   computed: {
@@ -214,6 +224,17 @@ export default {
           this.isLoading = false;
         });
     },
+    updateQueryStringParams() {
+      const queryParams = new URLSearchParams({
+        showArticles: this.showArticles,
+        showPodcasts: this.showPodcasts,
+        showYouTubeVideos: this.showYouTubeVideos,
+        searchTerm: this.searchTerm,
+        shouldFilterUnread: this.shouldFilterUnread,
+      });
+
+      history.replaceState(null, null, "?" + queryParams);
+    },
   },
   watch: {
     areAllChecked(selectEverything) {
@@ -221,6 +242,24 @@ export default {
         ? this.renderedItems.map(item => item.id)
         : [];
     },
+    showArticles() {
+      this.updateQueryStringParams();
+    },
+    showPodcasts() {
+      this.updateQueryStringParams();
+    },
+    showYouTubeVideos() {
+      this.updateQueryStringParams();
+    },
+    searchTerm() {
+      this.updateQueryStringParams();
+    },
+    shouldFilterUnread() {
+      this.updateQueryStringParams();
+    },
+  },
+  mounted() {
+    document.getElementById("search").focus();
   },
 };
 </script>
