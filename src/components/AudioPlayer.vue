@@ -121,6 +121,10 @@ audio:focus {
   border: 3px solid #1a237e;
 }
 
+figure {
+  margin: 0;
+}
+
 .btn {
   margin: 2rem 0 4rem 0;
   min-width: 100px;
