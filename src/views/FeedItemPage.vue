@@ -9,20 +9,22 @@
 
       <h2 class="title">{{ item.title }}</h2>
 
-      <div class="description" ref="description">
-        <div v-if="!!item.description">
-          <AudioPlayer v-if="item.mediaType === 'audio/mpeg'" :item="item" />
-          <div v-else v-html="item.description"></div>
+      <div class="item-container" ref="itemContainer">
+        <div class="item">
+          <div v-if="!!item.description">
+            <AudioPlayer v-if="item.mediaType === 'audio/mpeg'" :item="item" />
+            <div v-else v-html="item.description"></div>
+          </div>
+          <VideoPlayer
+            v-else-if="item.youtubeVideoId"
+            :videoId="item.youtubeVideoId"
+          />
         </div>
-        <VideoPlayer
-          v-else-if="item.youtubeVideoId"
-          :videoId="item.youtubeVideoId"
-        />
-      </div>
 
-      <a v-if="item.url" :href="item.url" target="_blank" ref="noopener">
-        {{ item.url }}
-      </a>
+        <a v-if="item.url" :href="item.url" target="_blank" ref="noopener">
+          {{ item.url }}
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -104,14 +106,18 @@ export default {
   margin: 0 2rem;
 }
 
-.description {
+.item {
+  margin-bottom: 2rem;
+}
+
+.item-container {
   padding: 3rem;
 }
 
 /* Mobile */
 @media (max-width: 37.5em) {
-  .description {
-    margin: 3rem auto;
+  .item-container {
+    margin: 1rem auto 2rem auto;
     padding: 0;
   }
 }

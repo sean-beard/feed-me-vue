@@ -25,8 +25,8 @@ export default {
     });
 
     window.setTimeout(() => {
-      if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.description)
-        addMaxWidth(this.$refs.description);
+      if (this.windowWidth < MOBILE_BREAKPOINT && this.$refs.itemContainer)
+        addMaxWidth(this.$refs.itemContainer);
     }, 1000);
   },
   beforeDestroy() {
@@ -34,14 +34,14 @@ export default {
   },
   watch: {
     windowWidth(newWidth, oldWidth) {
-      if (!this.$refs.description) return;
+      if (!this.$refs.itemContainer) return;
 
       if (oldWidth > MOBILE_BREAKPOINT && newWidth < MOBILE_BREAKPOINT) {
-        addMaxWidth(this.$refs.description);
+        addMaxWidth(this.$refs.itemContainer);
       }
 
       if (oldWidth < MOBILE_BREAKPOINT && newWidth > MOBILE_BREAKPOINT) {
-        removeMaxWidth(this.$refs.description);
+        removeMaxWidth(this.$refs.itemContainer);
       }
     },
   },
