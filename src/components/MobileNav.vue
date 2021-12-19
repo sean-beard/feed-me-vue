@@ -92,6 +92,7 @@ p {
 }
 
 .sidenav-trigger {
+  position: absolute;
   margin: 0;
 }
 
