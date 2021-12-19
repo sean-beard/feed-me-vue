@@ -9,7 +9,11 @@
         target="blank"
         rel="noopener"
       >
-        <img src="./assets/GitHub_Logo.png" width="100" />
+        <img
+          src="./assets/GitHub_Logo.png"
+          alt="FeedMe GitHub Repository"
+          width="100"
+        />
         <img src="./assets/GitHub_Mark.png" width="44" />
       </a>
     </footer>
