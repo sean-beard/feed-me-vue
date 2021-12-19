@@ -39,8 +39,7 @@ h2 {
 }
 
 footer {
-  margin-top: 2rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 #app {
@@ -51,7 +50,7 @@ footer {
   color: #2c3e50;
   display: flex;
   flex-direction: column;
-  height: 95vh;
+  height: 100vh;
 }
 
 #nav {
