@@ -49,7 +49,7 @@ export default {
     getFeeds() {
       this.loading = true;
 
-      get("/feed")
+      get("/feed?numItems=20")
         .then(({ status, feed }) => {
           if (status === 500) {
             this.error = "There was an error loading your feed";
@@ -72,6 +72,25 @@ export default {
     if (this.isAuthenticated) {
       this.getFeeds();
     }
+  },
+  watch: {
+    feedItems(newFeed, oldFeed) {
+      const hasInitialFeedLoaded = !oldFeed.length && newFeed.length;
+
+      if (hasInitialFeedLoaded) {
+        get("/feed")
+          .then(({ status, feed }) => {
+            if (status === 500) {
+              this.error = "There was an error loading your feed";
+              return;
+            }
+            this.feedItems = feed;
+          })
+          .catch(() => {
+            this.error = "There was an error loading your feed";
+          });
+      }
+    },
   },
 };
 </script>
