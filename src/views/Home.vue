@@ -49,7 +49,7 @@ export default {
     getFeeds() {
       this.loading = true;
 
-      get("/feed?numItems=20")
+      get("/feed?numItems=100")
         .then(({ status, feed }) => {
           if (status === 500) {
             this.error = "There was an error loading your feed";
