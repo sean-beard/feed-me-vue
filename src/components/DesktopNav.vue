@@ -1,7 +1,7 @@
 <template>
   <nav class="indigo darken-4">
     <h1>
-      <router-link :to="{ name: 'Home' }">FeedMe</router-link>
+      <a href="/">FeedMe</a>
     </h1>
 
     <div v-if="this.isAuthenticated">
