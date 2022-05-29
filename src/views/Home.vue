@@ -8,6 +8,7 @@
         <NewsFeed
           v-if="feedItems.length && !loading && !error"
           :items="feedItems"
+          :loading="backgroundLoading"
         />
 
         <h2 v-if="!feedItems.length && !error && !loading">
@@ -41,13 +42,16 @@ export default {
   data() {
     return {
       loading: false,
+      backgroundLoading: false,
       error: "",
       feedItems: [],
     };
   },
   methods: {
     getFeeds() {
-      if (!this.feedItems.length) {
+      if (this.feedItems.length) {
+        this.backgroundLoading = true;
+      } else {
         this.loading = true;
       }
 
@@ -65,6 +69,7 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+          this.backgroundLoading = false;
         });
     },
   },

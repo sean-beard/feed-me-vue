@@ -38,7 +38,7 @@
 
     <div class="controls">
       <div class="status-controls">
-        <label v-if="renderedItems.length">
+        <label v-if="renderedItems.length && !loading">
           <input type="checkbox" :value="true" v-model="areAllChecked" />
           <span class="visually-hidden">Select all items</span>
         </label>
@@ -108,6 +108,7 @@ export default {
   },
   props: {
     items: Array,
+    loading: Boolean,
   },
   data() {
     const {
