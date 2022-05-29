@@ -5,7 +5,7 @@
         <i class="material-icons">menu</i>
       </a>
       <h1>
-        <router-link :to="{ name: 'Home' }">FeedMe</router-link>
+        <a href="/">FeedMe</a>
       </h1>
     </nav>
 
