@@ -47,7 +47,9 @@ export default {
   },
   methods: {
     getFeeds() {
-      this.loading = true;
+      if (!this.feedItems.length) {
+        this.loading = true;
+      }
 
       get("/feed")
         .then(({ status, feed }) => {
@@ -56,6 +58,7 @@ export default {
             return;
           }
           this.feedItems = feed;
+          localStorage.setItem("feed", JSON.stringify(feed));
         })
         .catch(() => {
           this.error = "There was an error loading your feed";
@@ -70,6 +73,7 @@ export default {
   },
   created() {
     if (this.isAuthenticated) {
+      this.feedItems = JSON.parse(localStorage.getItem("feed")) ?? [];
       this.getFeeds();
     }
   },
