@@ -220,6 +220,7 @@ export default {
 
           this.areAllChecked = false;
           this.checkedItemIds = [];
+          localStorage.setItem("feed", JSON.stringify(this.items));
         })
         .finally(() => {
           this.isLoading = false;
