@@ -61,8 +61,14 @@ export default {
             this.error = "There was an error loading your feed";
             return;
           }
+
           this.feedItems = feed;
-          localStorage.setItem("feed", JSON.stringify(feed));
+
+          try {
+            localStorage.setItem("feed", JSON.stringify(feed));
+          } catch (e) {
+            console.error("There was an error caching the feed", e);
+          }
         })
         .catch(() => {
           this.error = "There was an error loading your feed";
