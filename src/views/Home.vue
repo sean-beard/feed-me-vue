@@ -64,10 +64,8 @@ export default {
           this.feedItems = feed;
           localStorage.setItem("feed", JSON.stringify(feed));
         })
-        .catch(e => {
-          this.error =
-            "There was an error loading your feed: " +
-            JSON.stringify(e, null, 2);
+        .catch(() => {
+          this.error = "There was an error loading your feed";
         })
         .finally(() => {
           this.loading = false;
