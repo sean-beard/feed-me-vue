@@ -14,10 +14,10 @@ export default new Vuex.Store({
     authToken: "",
     newsFeed: {
       searchTerm: "",
-      showArticles: "",
-      showPodcasts: "",
-      showYouTubeVideos: "",
-      shouldFilterUnread: "",
+      showArticles: true,
+      showPodcasts: true,
+      showYouTubeVideos: true,
+      shouldFilterUnread: true,
     },
   },
   mutations: {
