@@ -31,6 +31,7 @@ import FeedSkeleton from "@/components/FeedSkeleton";
 import NewsFeed from "@/components/NewsFeed";
 import PreLoginHome from "@/components/PreLoginHome";
 import { get } from "@/utils/api";
+import { NUM_CACHED_FEED_ITEMS } from "@/utils/ui";
 
 export default {
   name: "Home",
@@ -65,7 +66,10 @@ export default {
           this.feedItems = feed;
 
           try {
-            localStorage.setItem("feed", JSON.stringify(feed));
+            localStorage.setItem(
+              "feed",
+              JSON.stringify(feed.slice(0, NUM_CACHED_FEED_ITEMS)),
+            );
           } catch (e) {
             console.error("There was an error caching the feed", e);
           }
