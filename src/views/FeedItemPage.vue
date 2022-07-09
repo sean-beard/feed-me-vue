@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { get, put } from "@/utils/api";
 import mobileHtmlMixin from "@/mixins/mobileHtmlMixin.vue";
 import { getParameterByName } from "@/utils/url";
@@ -50,9 +50,23 @@ export default {
     };
   },
   computed: {
-    ...mapState(["isAuthenticated", "authToken"]),
+    ...mapState(["isAuthenticated", "authToken", "newsFeed"]),
   },
   methods: {
+    ...mapActions(["setNewsFeed"]),
+    updateGlobalCache(newIsReadStatus) {
+      const cachedItems = this.newsFeed.itemsCache;
+
+      cachedItems.forEach(cachedItem => {
+        if (cachedItem.id !== this.item.id) {
+          return;
+        }
+
+        cachedItem.isRead = newIsReadStatus;
+      });
+
+      this.setNewsFeed({ ...this.newsFeed, itemsCache: cachedItems });
+    },
     toggleReadStatus() {
       const newIsReadStatus = !this.item.isRead;
 
@@ -61,6 +75,7 @@ export default {
       })
         .then(() => {
           this.item.isRead = newIsReadStatus;
+          this.updateGlobalCache(newIsReadStatus);
         })
         .catch(() => {
           this.error = "There was an error updating the status of this item";
