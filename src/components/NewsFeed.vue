@@ -91,13 +91,15 @@
       </label>
     </div>
 
-    <div class="feed-row" v-for="item in renderedItems" :key="item.id">
-      <label>
-        <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
-        <span class="visually-hidden">{{ item.title }}</span>
-      </label>
-      <FeedItemCard class="full" :item="item" />
-    </div>
+    <transition-group name="transition-list">
+      <div class="feed-row" v-for="item in renderedItems" :key="item.id">
+        <label>
+          <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
+          <span class="visually-hidden">{{ item.title }}</span>
+        </label>
+        <FeedItemCard class="full" :item="item" />
+      </div>
+    </transition-group>
 
     <h2 v-if="!renderedItems.length">
       Nothing to see here!
@@ -393,6 +395,17 @@ button + button {
 [type="checkbox"]:checked + span:not(.lever)::before {
   border-right-color: #1a237e;
   border-bottom-color: #1a237e;
+}
+
+.transition-list-enter-active,
+.transition-list-leave-active {
+  transition: all 0.25s;
+}
+
+.transition-list-enter,
+.transition-list-leave-to {
+  opacity: 0;
+  transform: translateY(-16px);
 }
 
 /* Mobile */
