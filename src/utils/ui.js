@@ -1,6 +1,6 @@
 const MAX_MOBILE_WIDTH = "90vw";
 
-export const NUM_CACHED_FEED_ITEMS = 100;
+export const NUM_CACHED_FEED_ITEMS = 350;
 
 export const addMaxWidth = el => {
   el.style.maxWidth = MAX_MOBILE_WIDTH;
