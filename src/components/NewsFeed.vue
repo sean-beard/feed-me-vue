@@ -110,6 +110,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { put } from "@/utils/api";
+import { NUM_CACHED_FEED_ITEMS } from "@/utils/ui";
 import FeedItemCard from "./FeedItemCard";
 
 export default {
@@ -227,7 +228,10 @@ export default {
 
           this.areAllChecked = false;
           this.checkedItemIds = [];
-          localStorage.setItem("feed", JSON.stringify(this.items));
+          localStorage.setItem(
+            "feed",
+            JSON.stringify(this.items.slice(0, NUM_CACHED_FEED_ITEMS)),
+          );
         })
         .finally(() => {
           this.isLoading = false;
