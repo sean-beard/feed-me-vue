@@ -12,6 +12,13 @@ export default new Vuex.Store({
   state: {
     isAuthenticated: false,
     authToken: "",
+    newsFeed: {
+      searchTerm: "",
+      showArticles: "",
+      showPodcasts: "",
+      showYouTubeVideos: "",
+      shouldFilterUnread: "",
+    },
   },
   mutations: {
     updateUser(state, user) {
@@ -20,6 +27,9 @@ export default new Vuex.Store({
     updateAuthStatus(state, { isAuthenticated, authToken }) {
       state.isAuthenticated = isAuthenticated;
       state.authToken = authToken;
+    },
+    updateNewsFeed(state, newsFeed) {
+      state.newsFeed = newsFeed;
     },
   },
   actions: {
@@ -32,6 +42,9 @@ export default new Vuex.Store({
     },
     setIsAuthenticated({ commit }, payload) {
       commit("updateAuthStatus", payload);
+    },
+    setNewsFeed({ commit }, newsFeed) {
+      commit("updateNewsFeed", newsFeed);
     },
   },
   getters: {

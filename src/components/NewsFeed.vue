@@ -4,30 +4,34 @@
       <div>
         <div class="toggles">
           <label>
-            <input type="checkbox" :value="true" v-model="showArticles" />
+            <input type="checkbox" :value="true" v-model="localShowArticles" />
             <span>Articles</span>
           </label>
           <label>
-            <input type="checkbox" :value="true" v-model="showPodcasts" />
+            <input type="checkbox" :value="true" v-model="localShowPodcasts" />
             <span>Podcasts</span>
           </label>
           <label>
-            <input type="checkbox" :value="true" v-model="showYouTubeVideos" />
+            <input
+              type="checkbox"
+              :value="true"
+              v-model="localShowYouTubeVideos"
+            />
             <span>YouTube</span>
           </label>
         </div>
 
         <div class="input-field">
           <label for="search">{{
-            `Search ${shouldFilterUnread ? "unread" : "all"}`
+            `Search ${localShouldFilterUnread ? "unread" : "all"}`
           }}</label>
-          <input id="search" type="search" v-model="searchTerm" />
+          <input id="search" type="search" v-model="localSearchTerm" />
 
           <button
-            v-if="searchTerm"
+            v-if="localSearchTerm"
             class="clear-search-btn"
             type="button"
-            @click.prevent="searchTerm = ''"
+            @click.prevent="localSearchTerm = ''"
           >
             <span class="visually-hidden">Clear search text</span>
             <i class="material-icons">close</i>
@@ -62,19 +66,25 @@
       </div>
 
       <label class="desktop-filter">
-        <input type="checkbox" :value="true" v-model="shouldFilterUnread" />
+        <input
+          type="checkbox"
+          :value="true"
+          v-model="localShouldFilterUnread"
+        />
         <span>Filter by unread</span>
       </label>
 
       <label
         class="btn mobile-filter"
-        :class="shouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'"
+        :class="
+          localShouldFilterUnread ? 'mobile-filtered' : 'mobile-unfiltered'
+        "
       >
         <input
           type="checkbox"
           class="visually-hidden"
           :value="true"
-          v-model="shouldFilterUnread"
+          v-model="localShouldFilterUnread"
         />
         <span class="visually-hidden">Filter by unread</span>
         <i class="material-icons">filter_list</i>
@@ -96,10 +106,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import { put } from "@/utils/api";
 import FeedItemCard from "./FeedItemCard";
-
-const getBooleanFromQueryString = param => (param ? param === "true" : true);
 
 export default {
   name: "NewsFeed",
@@ -111,31 +120,26 @@ export default {
     loading: Boolean,
   },
   data() {
-    const {
-      searchTerm,
-      shouldFilterUnread,
-      showArticles,
-      showPodcasts,
-      showYouTubeVideos,
-    } = this.$route.query;
-
     return {
       areAllChecked: false,
       checkedItemIds: [],
-      searchTerm: searchTerm || "",
-      shouldFilterUnread: getBooleanFromQueryString(shouldFilterUnread),
       isLoading: false,
-      showArticles: getBooleanFromQueryString(showArticles),
-      showPodcasts: getBooleanFromQueryString(showPodcasts),
-      showYouTubeVideos: getBooleanFromQueryString(showYouTubeVideos),
+      localShouldFilterUnread: true,
+      localShowArticles: true,
+      localShowPodcasts: true,
+      localShowYouTubeVideos: true,
+      localSearchTerm: "",
     };
   },
   computed: {
+    ...mapState(["newsFeed"]),
     unreadItems() {
       return this.items.filter(item => !item.isRead);
     },
     renderedItems() {
-      const items = this.shouldFilterUnread ? this.unreadItems : this.items;
+      const items = this.localShouldFilterUnread
+        ? this.unreadItems
+        : this.items;
 
       const searchedItems = this.getSearchedItems(items);
 
@@ -143,22 +147,23 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["setNewsFeed"]),
     getSearchedItems(items) {
-      if (!this.searchTerm) return items;
+      if (!this.localSearchTerm) return items;
 
-      const searchTerm = this.searchTerm.toLowerCase();
+      const term = this.localSearchTerm.toLowerCase();
 
       return items.filter(
         item =>
-          item.title.toLowerCase().indexOf(searchTerm) > -1 ||
-          item.feedName.toLowerCase().indexOf(searchTerm) > -1 ||
-          (item.description || "").toLowerCase().indexOf(searchTerm) > -1,
+          item.title.toLowerCase().indexOf(term) > -1 ||
+          item.feedName.toLowerCase().indexOf(term) > -1 ||
+          (item.description || "").toLowerCase().indexOf(term) > -1,
       );
     },
     getFilteredItems(items) {
       let filteredItems = items;
 
-      if (!this.showArticles) {
+      if (!this.localShowArticles) {
         filteredItems = filteredItems.filter(item => {
           if (
             item.mediaType === "audio/mpeg" ||
@@ -171,13 +176,13 @@ export default {
         });
       }
 
-      if (!this.showPodcasts) {
+      if (!this.localShowPodcasts) {
         filteredItems = filteredItems.filter(
           item => item.mediaType !== "audio/mpeg",
         );
       }
 
-      if (!this.showYouTubeVideos) {
+      if (!this.localShowYouTubeVideos) {
         filteredItems = filteredItems.filter(item => {
           if (!item.url) {
             return true;
@@ -226,16 +231,16 @@ export default {
           this.isLoading = false;
         });
     },
-    updateQueryStringParams() {
-      const queryParams = new URLSearchParams({
-        showArticles: this.showArticles,
-        showPodcasts: this.showPodcasts,
-        showYouTubeVideos: this.showYouTubeVideos,
-        searchTerm: this.searchTerm,
-        shouldFilterUnread: this.shouldFilterUnread,
-      });
+    syncLocalStateToGlobalStore() {
+      const newsFeed = {
+        searchTerm: this.localSearchTerm,
+        showArticles: this.localShowArticles,
+        showPodcasts: this.localShowPodcasts,
+        showYouTubeVideos: this.localShowYouTubeVideos,
+        shouldFilterUnread: this.localShouldFilterUnread,
+      };
 
-      history.replaceState(null, null, "?" + queryParams);
+      this.setNewsFeed(newsFeed);
     },
   },
   watch: {
@@ -244,24 +249,38 @@ export default {
         ? this.renderedItems.map(item => item.id)
         : [];
     },
-    showArticles() {
-      this.updateQueryStringParams();
-    },
-    showPodcasts() {
-      this.updateQueryStringParams();
-    },
-    showYouTubeVideos() {
-      this.updateQueryStringParams();
-    },
-    searchTerm() {
-      this.updateQueryStringParams();
-    },
-    shouldFilterUnread() {
-      this.updateQueryStringParams();
-    },
   },
   mounted() {
-    document.getElementById("search").focus();
+    window.addEventListener("beforeunload", this.syncLocalStateToGlobalStore);
+
+    if (this.newsFeed.searchTerm) {
+      document.getElementById("search").focus();
+      this.localSearchTerm = this.newsFeed.searchTerm;
+    }
+
+    if (this.newsFeed.showArticles !== undefined) {
+      this.localShowArticles = this.newsFeed.showArticles;
+    }
+
+    if (this.newsFeed.showPodcasts !== undefined) {
+      this.localShowPodcasts = this.newsFeed.showPodcasts;
+    }
+
+    if (this.newsFeed.showYouTubeVideos !== undefined) {
+      this.localShowYouTubeVideos = this.newsFeed.showYouTubeVideos;
+    }
+
+    if (this.newsFeed.shouldFilterUnread !== undefined) {
+      this.localShouldFilterUnread = this.newsFeed.shouldFilterUnread;
+    }
+  },
+  beforeDestroy() {
+    this.syncLocalStateToGlobalStore();
+
+    window.removeEventListener(
+      "beforeunload",
+      this.syncLocalStateToGlobalStore,
+    );
   },
 };
 </script>
