@@ -101,6 +101,15 @@
       </div>
     </transition-group>
 
+    <button
+      v-if="shouldRenderLoadMoreButton"
+      class="btn"
+      type="button"
+      @click="loadMore()"
+    >
+      Load more
+    </button>
+
     <h2 v-if="!renderedItems.length">
       Nothing to see here!
     </h2>
@@ -112,6 +121,8 @@ import { mapActions, mapState } from "vuex";
 import { put } from "@/utils/api";
 import { NUM_CACHED_FEED_ITEMS } from "@/utils/ui";
 import FeedItemCard from "./FeedItemCard";
+
+const INITIAL_MAX_RENDERED_ITEMS = NUM_CACHED_FEED_ITEMS;
 
 export default {
   name: "NewsFeed",
@@ -132,6 +143,7 @@ export default {
       localShowPodcasts: true,
       localShowYouTubeVideos: true,
       localSearchTerm: "",
+      maxRenderedItems: INITIAL_MAX_RENDERED_ITEMS,
     };
   },
   computed: {
@@ -142,11 +154,18 @@ export default {
     renderedItems() {
       const items = this.localShouldFilterUnread
         ? this.unreadItems
-        : this.items;
+        : this.items.slice(0, this.maxRenderedItems);
 
       const searchedItems = this.getSearchedItems(items);
 
       return this.getFilteredItems(searchedItems);
+    },
+    shouldRenderLoadMoreButton() {
+      const numAllItems = this.items.length;
+
+      return (
+        !this.localShouldFilterUnread && numAllItems > this.renderedItems.length
+      );
     },
   },
   methods: {
@@ -236,6 +255,10 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
+    },
+    loadMore() {
+      this.maxRenderedItems =
+        this.maxRenderedItems + INITIAL_MAX_RENDERED_ITEMS;
     },
   },
   watch: {

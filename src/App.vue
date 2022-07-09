@@ -39,6 +39,7 @@ h2 {
 }
 
 footer {
+  padding-top: 2rem;
   padding-bottom: 0.5rem;
 }
 
