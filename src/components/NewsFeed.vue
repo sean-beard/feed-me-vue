@@ -261,24 +261,13 @@ export default {
 
     if (this.newsFeed.searchTerm) {
       document.getElementById("search").focus();
-      this.localSearchTerm = this.newsFeed.searchTerm;
     }
 
-    if (this.newsFeed.showArticles !== undefined) {
-      this.localShowArticles = this.newsFeed.showArticles;
-    }
-
-    if (this.newsFeed.showPodcasts !== undefined) {
-      this.localShowPodcasts = this.newsFeed.showPodcasts;
-    }
-
-    if (this.newsFeed.showYouTubeVideos !== undefined) {
-      this.localShowYouTubeVideos = this.newsFeed.showYouTubeVideos;
-    }
-
-    if (this.newsFeed.shouldFilterUnread !== undefined) {
-      this.localShouldFilterUnread = this.newsFeed.shouldFilterUnread;
-    }
+    this.localSearchTerm = this.newsFeed.searchTerm;
+    this.localShowArticles = this.newsFeed.showArticles;
+    this.localShowPodcasts = this.newsFeed.showPodcasts;
+    this.localShowYouTubeVideos = this.newsFeed.showYouTubeVideos;
+    this.localShouldFilterUnread = this.newsFeed.shouldFilterUnread;
   },
   beforeDestroy() {
     this.syncLocalStateToGlobalStore();
