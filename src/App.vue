@@ -39,6 +39,7 @@ h2 {
 }
 
 footer {
+  padding-top: 2rem;
   padding-bottom: 0.5rem;
 }
 
@@ -74,8 +75,13 @@ footer {
   background-color: #1a237e;
 }
 
-.btn:hover,
 .btn:focus {
+  outline: 5px solid #9e9e9e;
+  outline: 5px auto -webkit-focus-ring-color;
+  background-color: #1a237e;
+}
+
+.btn:hover {
   background-color: white;
   color: #1a237e;
 }
