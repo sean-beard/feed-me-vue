@@ -151,21 +151,20 @@ export default {
     unreadItems() {
       return this.items.filter(item => !item.isRead);
     },
-    renderedItems() {
+    potentialItemsToRender() {
       const items = this.localShouldFilterUnread
         ? this.unreadItems
-        : this.items.slice(0, this.maxRenderedItems);
+        : this.items;
 
       const searchedItems = this.getSearchedItems(items);
 
       return this.getFilteredItems(searchedItems);
     },
+    renderedItems() {
+      return this.potentialItemsToRender.slice(0, this.maxRenderedItems);
+    },
     shouldRenderLoadMoreButton() {
-      const numAllItems = this.items.length;
-
-      return (
-        !this.localShouldFilterUnread && numAllItems > this.renderedItems.length
-      );
+      return this.potentialItemsToRender.length > this.renderedItems.length;
     },
   },
   methods: {
