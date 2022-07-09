@@ -237,17 +237,6 @@ export default {
           this.isLoading = false;
         });
     },
-    syncLocalStateToGlobalStore() {
-      const newsFeed = {
-        searchTerm: this.localSearchTerm,
-        showArticles: this.localShowArticles,
-        showPodcasts: this.localShowPodcasts,
-        showYouTubeVideos: this.localShowYouTubeVideos,
-        shouldFilterUnread: this.localShouldFilterUnread,
-      };
-
-      this.setNewsFeed(newsFeed);
-    },
   },
   watch: {
     areAllChecked(selectEverything) {
@@ -255,10 +244,35 @@ export default {
         ? this.renderedItems.map(item => item.id)
         : [];
     },
+    localSearchTerm() {
+      this.setNewsFeed({ ...this.newsFeed, searchTerm: this.localSearchTerm });
+    },
+    localShowArticles() {
+      this.setNewsFeed({
+        ...this.newsFeed,
+        showArticles: this.localShowArticles,
+      });
+    },
+    localShowPodcasts() {
+      this.setNewsFeed({
+        ...this.newsFeed,
+        showPodcasts: this.localShowPodcasts,
+      });
+    },
+    localShowYouTubeVideos() {
+      this.setNewsFeed({
+        ...this.newsFeed,
+        showYouTubeVideos: this.localShowYouTubeVideos,
+      });
+    },
+    localShouldFilterUnread() {
+      this.setNewsFeed({
+        ...this.newsFeed,
+        shouldFilterUnread: this.localShouldFilterUnread,
+      });
+    },
   },
   mounted() {
-    window.addEventListener("beforeunload", this.syncLocalStateToGlobalStore);
-
     if (this.newsFeed.searchTerm) {
       document.getElementById("search").focus();
     }
@@ -268,14 +282,6 @@ export default {
     this.localShowPodcasts = this.newsFeed.showPodcasts;
     this.localShowYouTubeVideos = this.newsFeed.showYouTubeVideos;
     this.localShouldFilterUnread = this.newsFeed.shouldFilterUnread;
-  },
-  beforeDestroy() {
-    this.syncLocalStateToGlobalStore();
-
-    window.removeEventListener(
-      "beforeunload",
-      this.syncLocalStateToGlobalStore,
-    );
   },
 };
 </script>
