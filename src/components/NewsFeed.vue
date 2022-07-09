@@ -228,10 +228,10 @@ export default {
 
           this.areAllChecked = false;
           this.checkedItemIds = [];
-          localStorage.setItem(
-            "feed",
-            JSON.stringify(this.items.slice(0, NUM_CACHED_FEED_ITEMS)),
-          );
+          this.setNewsFeed({
+            ...this.newsFeed,
+            itemsCache: this.items.slice(0, NUM_CACHED_FEED_ITEMS),
+          });
         })
         .finally(() => {
           this.isLoading = false;

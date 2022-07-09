@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import FeedSkeleton from "@/components/FeedSkeleton";
 import NewsFeed from "@/components/NewsFeed";
 import PreLoginHome from "@/components/PreLoginHome";
@@ -49,6 +49,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setNewsFeed"]),
     getFeeds() {
       if (this.feedItems.length) {
         this.backgroundLoading = true;
@@ -65,14 +66,10 @@ export default {
 
           this.feedItems = feed;
 
-          try {
-            localStorage.setItem(
-              "feed",
-              JSON.stringify(feed.slice(0, NUM_CACHED_FEED_ITEMS)),
-            );
-          } catch (e) {
-            console.error("There was an error caching the feed", e);
-          }
+          this.setNewsFeed({
+            ...this.newsFeed,
+            itemsCache: feed.slice(0, NUM_CACHED_FEED_ITEMS),
+          });
         })
         .catch(() => {
           this.error = "There was an error loading your feed";
@@ -84,11 +81,11 @@ export default {
     },
   },
   computed: {
-    ...mapState(["isAuthenticated"]),
+    ...mapState(["isAuthenticated", "newsFeed"]),
   },
   created() {
     if (this.isAuthenticated) {
-      this.feedItems = JSON.parse(localStorage.getItem("feed")) ?? [];
+      this.feedItems = this.newsFeed.itemsCache;
       this.getFeeds();
     }
   },
