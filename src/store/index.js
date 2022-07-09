@@ -18,6 +18,7 @@ export default new Vuex.Store({
       showPodcasts: true,
       showYouTubeVideos: true,
       shouldFilterUnread: true,
+      itemsCache: [],
     },
   },
   mutations: {
