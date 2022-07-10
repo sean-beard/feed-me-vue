@@ -8,7 +8,7 @@
         <NewsFeed
           v-if="feedItems.length && !loading && !error"
           :items="feedItems"
-          :loading="backgroundLoading"
+          :fetchingFeed="backgroundLoading"
         />
 
         <h2 v-if="!feedItems.length && !error && !loading">
