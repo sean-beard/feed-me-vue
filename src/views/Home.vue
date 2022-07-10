@@ -8,7 +8,7 @@
         <NewsFeed
           v-if="feedItems.length && !loading && !error"
           :items="feedItems"
-          :loading="backgroundLoading"
+          :fetchingFeed="backgroundLoading"
         />
 
         <h2 v-if="!feedItems.length && !error && !loading">
@@ -50,21 +50,9 @@ export default {
   },
   methods: {
     ...mapActions(["setNewsFeed"]),
-    cachedFeedHasUnreadItems() {
-      return (this.newsFeed.itemsCache || []).some(
-        cachedItem => !cachedItem.isRead,
-      );
-    },
     getFeeds() {
       if (this.feedItems.length) {
         this.backgroundLoading = true;
-
-        if (
-          !this.cachedFeedHasUnreadItems() &&
-          this.newsFeed.shouldFilterUnread
-        ) {
-          this.loading = true;
-        }
       } else {
         this.loading = true;
       }

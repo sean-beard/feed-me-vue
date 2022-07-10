@@ -42,7 +42,7 @@
 
     <div class="controls">
       <div class="status-controls">
-        <label v-if="renderedItems.length && !loading">
+        <label v-if="renderedItems.length && !fetchingFeed">
           <input type="checkbox" :value="true" v-model="areAllChecked" />
           <span class="visually-hidden">Select all items</span>
         </label>
@@ -91,33 +91,38 @@
       </label>
     </div>
 
-    <transition-group name="transition-list">
-      <div class="feed-row" v-for="item in renderedItems" :key="item.id">
-        <label>
-          <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
-          <span class="visually-hidden">{{ item.title }}</span>
-        </label>
-        <FeedItemCard class="full" :item="item" />
-      </div>
-    </transition-group>
+    <div v-if="shouldRenderSkeleton"><FeedSkeleton /></div>
 
-    <button
-      v-if="shouldRenderLoadMoreButton"
-      class="btn"
-      type="button"
-      @click="loadMore()"
-    >
-      Load more
-    </button>
+    <div v-if="!shouldRenderSkeleton">
+      <transition-group name="transition-list">
+        <div class="feed-row" v-for="item in renderedItems" :key="item.id">
+          <label>
+            <input type="checkbox" :value="item.id" v-model="checkedItemIds" />
+            <span class="visually-hidden">{{ item.title }}</span>
+          </label>
+          <FeedItemCard class="full" :item="item" />
+        </div>
+      </transition-group>
 
-    <h2 v-if="!renderedItems.length">
-      Nothing to see here!
-    </h2>
+      <button
+        v-if="shouldRenderLoadMoreButton"
+        class="btn"
+        type="button"
+        @click="loadMore()"
+      >
+        Load more
+      </button>
+
+      <h2 v-if="!renderedItems.length">
+        Nothing to see here!
+      </h2>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
+import FeedSkeleton from "@/components/FeedSkeleton";
 import { put } from "@/utils/api";
 import { NUM_CACHED_FEED_ITEMS } from "@/utils/ui";
 import FeedItemCard from "./FeedItemCard";
@@ -128,10 +133,11 @@ export default {
   name: "NewsFeed",
   components: {
     FeedItemCard,
+    FeedSkeleton,
   },
   props: {
     items: Array,
-    loading: Boolean,
+    fetchingFeed: Boolean,
   },
   data() {
     return {
@@ -165,6 +171,15 @@ export default {
     },
     shouldRenderLoadMoreButton() {
       return this.potentialItemsToRender.length > this.renderedItems.length;
+    },
+    shouldRenderSkeleton() {
+      const unreadRenderedItems = this.renderedItems.some(item => !item.isRead);
+
+      return (
+        this.fetchingFeed &&
+        !unreadRenderedItems &&
+        this.newsFeed.shouldFilterUnread
+      );
     },
   },
   methods: {
