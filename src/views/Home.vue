@@ -50,21 +50,9 @@ export default {
   },
   methods: {
     ...mapActions(["setNewsFeed"]),
-    cachedFeedHasUnreadItems() {
-      return (this.newsFeed.itemsCache || []).some(
-        cachedItem => !cachedItem.isRead,
-      );
-    },
     getFeeds() {
       if (this.feedItems.length) {
         this.backgroundLoading = true;
-
-        if (
-          !this.cachedFeedHasUnreadItems() &&
-          this.newsFeed.shouldFilterUnread
-        ) {
-          this.loading = true;
-        }
       } else {
         this.loading = true;
       }
